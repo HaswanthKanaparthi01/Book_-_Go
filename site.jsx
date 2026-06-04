@@ -37,7 +37,7 @@ function SiteNav({ go, solid }) {
           ))}
         </nav>
         <div className="nav-actions">
-          <button onClick={() => go('booking')} className="btn btn-green btn-sm">Book now</button>
+          <button onClick={() => { setMenuOpen(false); go('package', { id: 'explorer5' }); }} className="btn btn-green btn-sm">Book now</button>
           <button type="button" className="nav-menu-btn" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen}
             onClick={() => setMenuOpen(o => !o)}
             style={{ color: navBtnColor }}>
@@ -50,10 +50,10 @@ function SiteNav({ go, solid }) {
         {links.map(([t, v]) => (
           <button key={t} type="button" className="nav-drawer__link" onClick={() => runLink(v)}>{t}</button>
         ))}
-        <button type="button" className="btn btn-green" style={{ width: '100%', marginTop: 8 }} onClick={() => { setMenuOpen(false); go('booking'); }}>Book now</button>
+        <button type="button" className="btn btn-green" style={{ width: '100%', marginTop: 8 }} onClick={() => { setMenuOpen(false); go('package', { id: 'explorer5' }); }}>Book now</button>
       </div>
     </header>
-);
+  );
 }
 
 /* ---------------- Footer ---------------- */
@@ -65,10 +65,10 @@ function SiteFooter({ go }) {
           <div>
             <Logo light />
             <p style={{ color: 'rgba(255,255,255,.62)', maxWidth: 320, marginTop: 16, lineHeight: 1.5, fontSize: 15 }}>
-  Curated travel experiences designed for explorers.
-  Discover new destinations, unique journeys,
-  and unforgettable adventures around the world.
-</p>
+              Curated travel experiences designed for explorers.
+              Discover new destinations, unique journeys,
+              and unforgettable adventures around the world.
+            </p>
           </div>
           {[['Explore', ['Destinations', 'Experiences', 'Packages', 'Coming Soon']],
             ['Company', ['About', 'Local hosts', 'Sustainability', 'Press']],
@@ -92,7 +92,7 @@ function SiteFooter({ go }) {
 
 /* ---------------- Hero search ---------------- */
 function HeroSearch({ go }) {
-  const tabs = [ 'Search All', 'Packages', 'Experiences', 'Destinations' ];
+  const tabs = ['Search All', 'Packages', 'Experiences', 'Destinations'];
   const [active, setActive] = useState('Search All');
   const [q, setQ] = useState('');
   return (
@@ -100,10 +100,14 @@ function HeroSearch({ go }) {
       <div style={{ display: 'flex', gap: 4, marginBottom: 14, flexWrap: 'wrap' }}>
         {tabs.map(t => (
           <button key={t} onClick={() => setActive(t)}
-            style={{ fontWeight: 700, fontSize: 14.5, color: '#fff', padding: '7px 15px', borderRadius: 999, whiteSpace: 'nowrap',
+            style={{
+              fontWeight: 700, fontSize: 14.5, color: '#fff', padding: '7px 15px',
+              borderRadius: 999, whiteSpace: 'nowrap',
               background: active === t ? 'rgba(255,255,255,.22)' : 'transparent',
               boxShadow: active === t ? 'inset 0 0 0 1.5px rgba(255,255,255,.55)' : 'none',
-              textShadow: '0 1px 10px rgba(0,0,0,.35)', backdropFilter: active === t ? 'blur(8px)' : 'none' }}>{t}</button>
+              textShadow: '0 1px 10px rgba(0,0,0,.5)',
+              backdropFilter: active === t ? 'blur(8px)' : 'none'
+            }}>{t}</button>
         ))}
       </div>
       <div className="hero-search-bar">
@@ -122,15 +126,30 @@ function Home({ go }) {
   return (
     <div>
       <SiteNav go={go} />
+
       {/* HERO */}
       <section className="hero">
         <Photo scene="hero" showLabel={false} vignette={false} style={{ position: 'absolute', inset: 0, height: '100%' }} />
-        <div className="hero__overlay" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,.52) 0%, rgba(0,0,0,.18) 42%, rgba(0,0,0,.12) 60%, rgba(0,0,0,.55) 100%)' }} />
+        <div className="hero__overlay" style={{
+          background: 'linear-gradient(180deg, rgba(0,0,0,.60) 0%, rgba(0,0,0,.48) 38%, rgba(0,0,0,.40) 60%, rgba(0,0,0,.65) 100%)'
+        }} />
         <div className="wrap" style={{ position: 'relative', zIndex: 2, paddingTop: 90, width: '100%' }}>
-          <h1 className="display fade-up hero__title" style={{ color: '#fbfbf6', fontSize: 'clamp(52px, 8.4vw, 118px)', margin: '0 0 20px', textShadow: '0 4px 40px rgba(0,0,0,.25)' }}>
+          <h1 className="display fade-up hero__title" style={{
+            color: '#ffffff',
+            fontSize: 'clamp(52px, 8.4vw, 118px)',
+            margin: '0 0 20px',
+            textShadow: '0 2px 24px rgba(0,0,0,.55)'
+          }}>
             See the world differently.
           </h1>
-          <p className="fade-up" style={{ color: 'rgba(255,255,255,.95)', fontSize: 'clamp(17px,1.9vw,23px)', fontWeight: 600, maxWidth: 500, margin: '0 0 30px', textShadow: '0 2px 18px rgba(0,0,0,.45)' }}>
+          <p className="fade-up" style={{
+            color: 'rgba(255,255,255,.96)',
+            fontSize: 'clamp(17px,1.9vw,23px)',
+            fontWeight: 600,
+            maxWidth: 500,
+            margin: '0 0 30px',
+            textShadow: '0 2px 14px rgba(0,0,0,.6)'
+          }}>
             Curated travel experiences designed for modern explorers. Discover unique journeys and unforgettable destinations.
           </p>
           <HeroSearch go={go} />
@@ -142,67 +161,62 @@ function Home({ go }) {
         <div className="wrap">
           <SectionHead eyebrow="Book & Go travel agency" title="Choose your destination." />
           <div className="dest-grid-2">
+
             {/* Card 1 — Amsterdam */}
-            <button onClick={() => go('package', { id: 'explorer5' })} className="dcard" style={{ position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden', textAlign: 'left', display: 'block', boxShadow: 'var(--shadow-md)', background: 'none', padding: 0 }}>
+            <button onClick={() => go('package', { id: 'explorer5' })} className="dcard" style={{
+              position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden',
+              textAlign: 'left', display: 'block', boxShadow: 'var(--shadow-md)',
+              background: 'none', padding: 0
+            }}>
               <Photo scene="amsterdam" style={{ position: 'absolute', inset: 0, height: '100%' }} />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,.12) 0%, rgba(0,0,0,0) 36%, rgba(0,0,0,.8) 100%)' }} />
-              <div className="dest-card-body" style={{ position: 'relative', zIndex: 2, minHeight: 460, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 38, color: '#fff' }}>
-                <span className="chip" style={{ alignSelf: 'flex-start', background: 'rgba(255,255,255,.92)', boxShadow: 'none', marginBottom: 'auto', whiteSpace: 'nowrap' }}><span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--green)' }} /> Available now</span>
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 36%, rgba(0,0,0,.82) 100%)' }} />
+              <div className="dest-card-body" style={{
+                position: 'relative', zIndex: 2, minHeight: 460,
+                display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
+                padding: 38, color: '#fff'
+              }}>
+                <span className="chip" style={{
+                  alignSelf: 'flex-start',
+                  background: '#ffffff',
+                  color: 'var(--ink)',
+                  boxShadow: '0 2px 16px rgba(0,0,0,.35)',
+                  marginBottom: 'auto',
+                  whiteSpace: 'nowrap',
+                  fontWeight: 800
+                }}>
+                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--green)', flexShrink: 0 }} />
+                  Available now
+                </span>
                 <h3 className="display" style={{ fontSize: 'clamp(40px,5vw,66px)', margin: '0 0 12px' }}>Explore Amsterdam</h3>
-                <p style={{ fontWeight: 600, fontSize: 17.5, color: 'rgba(255,255,255,.92)', margin: '0 0 24px', maxWidth: 430, textShadow: '0 2px 14px rgba(0,0,0,.4)' }}>Our featured travel experience, carefully designed with culture, discovery and unforgettable moments.</p>
-                <span className="btn btn-green" style={{ alignSelf: 'flex-start' }}>View Package <Icon name="arrow" size={18} color="#04391f" /></span>
+                <p style={{ fontWeight: 600, fontSize: 17.5, color: 'rgba(255,255,255,.92)', margin: '0 0 24px', maxWidth: 430, textShadow: '0 2px 14px rgba(0,0,0,.4)' }}>
+                  Our featured travel experience, carefully designed with culture, discovery and unforgettable moments.
+                </p>
+                <span className="btn btn-green" style={{ alignSelf: 'flex-start' }}>
+                  View Package <Icon name="arrow" size={18} color="#04391f" />
+                </span>
               </div>
             </button>
-      {/* Card 2 — More trips coming soon */}
-<div
-  style={{
-    position: 'relative',
-    borderRadius: 'var(--r-lg)',
-    overflow: 'hidden',
-    minHeight: 360,
-    background: 'var(--ink)',
-    color: '#fff',
-    padding: 38,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center'
-  }}
->
-  <div className="eyebrow" style={{ color: 'var(--green)', marginBottom: 18 }}>
-    Coming Soon
-  </div>
 
-  <h3
-    className="display"
-    style={{
-      fontSize: 'clamp(34px,4vw,52px)',
-      margin: '0 0 20px'
-    }}
-  >
-    More places.
-    <br />
-    More stories.
-    <br />
-    More adventures.
-  </h3>
+            {/* Card 2 — Coming Soon */}
+            <div style={{
+              position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden',
+              minHeight: 360, background: 'var(--ink)', color: '#fff',
+              padding: 38, display: 'flex', flexDirection: 'column', justifyContent: 'center'
+            }}>
+              <div className="eyebrow" style={{ color: 'var(--green)', marginBottom: 18 }}>Coming Soon</div>
+              <h3 className="display" style={{ fontSize: 'clamp(34px,4vw,52px)', margin: '0 0 20px' }}>
+                More places.<br />More stories.<br />More adventures.
+              </h3>
+              <p style={{ color: 'rgba(255,255,255,.75)', fontSize: 17, lineHeight: 1.6, maxWidth: 420, margin: 0 }}>
+                New travel experiences are currently being prepared and will be available soon.
+              </p>
+            </div>
 
-  <p
-    style={{
-      color: 'rgba(255,255,255,.75)',
-      fontSize: 17,
-      lineHeight: 1.6,
-      maxWidth: 420,
-      margin: 0
-    }}
-  >
-    New travel experiences are currently being prepared and will be available soon.
-  </p>
-</div>
-</div>
-</div>
-</section>
+          </div>
+        </div>
+      </section>
 
-<SiteFooter go={go} />
+      <SiteFooter go={go} />
     </div>
   );
 }
@@ -226,7 +240,7 @@ function DestinationCard({ d, go }) {
     <button onClick={() => go('destination', { id: d.id })} style={{ textAlign: 'left', display: 'block', width: '100%', background: 'none' }} className="dcard">
       <div style={{ borderRadius: 'var(--r-md)', overflow: 'hidden', height: 230, marginBottom: 14, boxShadow: 'var(--shadow-sm)' }} className="dcard-img">
         <Photo scene={d.scene} label={d.name.toLowerCase()} style={{ height: '100%' }}>
-          <span className="chip" style={{ position: 'absolute', top: 12, left: 12, background: 'rgba(255,255,255,.92)', boxShadow: 'none' }}>{d.tag}</span>
+          <span className="chip" style={{ position: 'absolute', top: 12, left: 12, background: '#fff', color: 'var(--ink)', boxShadow: '0 2px 10px rgba(0,0,0,.2)', fontWeight: 800 }}>{d.tag}</span>
         </Photo>
       </div>
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
@@ -244,10 +258,10 @@ function DestinationCard({ d, go }) {
 /* ---- experience card (editorial) ---- */
 function ExperienceCard({ e, go }) {
   return (
-    <button onClick={() => go('destination', { id: 'keukenhof' })} style={{ textAlign: 'left', width: '100%' }} className="card dcard" >
+    <button onClick={() => go('destination', { id: 'keukenhof' })} style={{ textAlign: 'left', width: '100%' }} className="card dcard">
       <div style={{ borderRadius: 'var(--r-lg) var(--r-lg) 0 0', overflow: 'hidden', height: 250 }} className="dcard-img">
         <Photo scene={e.scene} label={e.name.toLowerCase()} style={{ height: '100%' }}>
-          <span className="chip" style={{ position: 'absolute', top: 12, left: 12, background: 'rgba(255,255,255,.92)', boxShadow: 'none' }}>{e.dur}</span>
+          <span className="chip" style={{ position: 'absolute', top: 12, left: 12, background: '#fff', color: 'var(--ink)', boxShadow: '0 2px 10px rgba(0,0,0,.2)', fontWeight: 800 }}>{e.dur}</span>
         </Photo>
       </div>
       <div style={{ padding: '22px 22px 24px' }}>
