@@ -106,6 +106,7 @@ function Icon({ name, size = 18, stroke = 2, color = 'currentColor' }) {
     globe: <><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" /></>,
     plus: <path d="M12 5v14M5 12h14" />,
     filter: <path d="M3 5h18l-7 8v6l-4-2v-4Z" />,
+    menu: <><path d="M4 7h16M4 12h16M4 17h16" /></>,
     instagram: <><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1.1" fill={color} stroke="none" /></>,
   };
   return <svg {...p}>{paths[name] || null}</svg>;

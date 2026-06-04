@@ -6,29 +6,56 @@ const { useState, useEffect, useRef } = React;
 /* ---------------- Nav ---------------- */
 function SiteNav({ go, solid }) {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
     if (solid) return;
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll); onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, [solid]);
+  useEffect(() => {
+    document.body.classList.toggle('nav-open', menuOpen);
+    return () => document.body.classList.remove('nav-open');
+  }, [menuOpen]);
+  useEffect(() => { setMenuOpen(false); }, [solid]);
   const dark = solid || scrolled;
   const links = [['Trips', 'home#discover'], ['Amsterdam Package', 'package#']];
+  const navBtnColor = dark ? 'var(--ink)' : 'rgba(255,255,255,.95)';
+  const runLink = (v) => {
+    setMenuOpen(false);
+    if (v === 'package#') go('package', { id: 'explorer5' });
+    else go(v.split('#')[0], { anchor: v.split('#')[1] });
+  };
   return (
-    <header style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, transition: 'all .25s ease',
-      background: dark ? 'rgba(255,255,255,.92)' : 'transparent', backdropFilter: dark ? 'saturate(1.4) blur(12px)' : 'none',
-      boxShadow: dark ? '0 1px 0 var(--line)' : 'none' }}>
-      <div className="wrap" style={{ height: 74, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Logo light={!dark} onClick={() => go('home')} />
-        <nav style={{ display: 'flex', alignItems: 'center', gap: 30 }} className="nav-links">
+    <header className={`site-header${dark ? ' site-header--solid' : ''}`}>
+      <div className="wrap site-header__inner">
+        <Logo light={!dark} onClick={() => { setMenuOpen(false); go('home'); }} />
+        <nav className="nav-links" style={{ display: 'flex', alignItems: 'center', gap: 30 }}>
           {links.map(([t, v]) => (
-            <button key={t} onClick={() => v === 'package#' ? go('package', { id: 'explorer5' }) : go(v.split('#')[0], { anchor: v.split('#')[1] })}
-              style={{ fontWeight: 700, fontSize: 15.5, color: dark ? 'var(--ink)' : 'rgba(255,255,255,.95)', textShadow: dark ? 'none' : '0 1px 12px rgba(0,0,0,.3)' }}>{t}</button>
+            <button key={t} onClick={() => runLink(v)}
+              style={{ fontWeight: 700, fontSize: 15.5, color: navBtnColor, textShadow: dark ? 'none' : '0 1px 12px rgba(0,0,0,.3)' }}>{t}</button>
           ))}
         </nav>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div className="nav-actions">
+          <button onClick={() => go('dashboard')} className="btn btn-sm nav-studio"
+            style={{ background: dark ? 'var(--ink)' : 'rgba(255,255,255,.16)', color: '#fff', boxShadow: dark ? 'none' : 'inset 0 0 0 1.5px rgba(255,255,255,.4)', backdropFilter: 'blur(8px)' }}>
+            <Icon name="sparkle" size={15} color={dark ? 'var(--green)' : '#fff'} /> <span className="nav-studio__label">AI Studio</span>
+          </button>
           <button onClick={() => go('booking')} className="btn btn-green btn-sm">Book now</button>
+          <button type="button" className="nav-menu-btn" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen}
+            onClick={() => setMenuOpen(o => !o)}
+            style={{ color: navBtnColor }}>
+            <Icon name={menuOpen ? 'x' : 'menu'} size={22} color="currentColor" />
+          </button>
         </div>
+      </div>
+      {menuOpen && <button type="button" className="nav-backdrop" aria-label="Close menu" onClick={() => setMenuOpen(false)} />}
+      <div className={`nav-drawer${menuOpen ? ' nav-drawer--open' : ''}`}>
+        {links.map(([t, v]) => (
+          <button key={t} type="button" className="nav-drawer__link" onClick={() => runLink(v)}>{t}</button>
+        ))}
+        <button type="button" className="nav-drawer__link" onClick={() => { setMenuOpen(false); go('dashboard'); }}>AI Studio</button>
+        <button type="button" className="btn btn-green" style={{ width: '100%', marginTop: 8 }} onClick={() => { setMenuOpen(false); go('booking'); }}>Book now</button>
       </div>
     </header>
 );
@@ -59,7 +86,7 @@ function SiteFooter({ go }) {
             </div>
           ))}
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 28, color: 'rgba(255,255,255,.5)', fontSize: 14, fontWeight: 600 }} className="foot-bottom">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 28, color: 'rgba(255,255,255,.5)', fontSize: 14, fontWeight: 600, flexWrap: 'wrap', gap: 12 }} className="foot-bottom">
           <span>© 2026 Book &amp; Go — prototype</span>
           <span style={{ display: 'flex', gap: 20 }}><span>Worldwide Destinations</span><span>EN · €</span></span>
         </div>
@@ -84,12 +111,12 @@ function HeroSearch({ go }) {
               textShadow: '0 1px 10px rgba(0,0,0,.35)', backdropFilter: active === t ? 'blur(8px)' : 'none' }}>{t}</button>
         ))}
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: '#fff', borderRadius: 999, padding: '9px 9px 9px 22px', boxShadow: '0 20px 50px rgba(0,0,0,.28)' }}>
-        <Icon name="search" size={22} color="var(--ink-3)" />
-        <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search Destinations, Experiences, Packages..."
+      <div className="hero-search-bar">
+        <span className="hero-search-bar__icon"><Icon name="search" size={22} color="var(--ink-3)" /></span>
+        <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search destinations, packages…"
           onKeyDown={e => e.key === 'Enter' && go('home', { anchor: 'discover' })}
-          style={{ flex: 1, border: 'none', outline: 'none', fontFamily: 'var(--font-text)', fontSize: 18, fontWeight: 600, background: 'transparent', minWidth: 0 }} />
-        <button onClick={() => go('home', { anchor: 'discover' })} className="btn btn-green btn-lg" style={{ padding: '14px 34px' }}>Search</button>
+          className="hero-search-bar__input" />
+        <button onClick={() => go('home', { anchor: 'discover' })} className="btn btn-green hero-search-bar__btn">Search</button>
       </div>
     </div>
   );
@@ -124,7 +151,7 @@ function Home({ go }) {
             <button onClick={() => go('package', { id: 'explorer5' })} className="dcard" style={{ position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden', textAlign: 'left', display: 'block', boxShadow: 'var(--shadow-md)', background: 'none', padding: 0 }}>
               <Photo scene="amsterdam" style={{ position: 'absolute', inset: 0, height: '100%' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,.12) 0%, rgba(0,0,0,0) 36%, rgba(0,0,0,.8) 100%)' }} />
-              <div style={{ position: 'relative', zIndex: 2, minHeight: 460, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 38, color: '#fff' }}>
+              <div className="dest-card-body" style={{ position: 'relative', zIndex: 2, minHeight: 460, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 38, color: '#fff' }}>
                 <span className="chip" style={{ alignSelf: 'flex-start', background: 'rgba(255,255,255,.92)', boxShadow: 'none', marginBottom: 'auto', whiteSpace: 'nowrap' }}><span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--green)' }} /> Available now</span>
                 <h3 className="display" style={{ fontSize: 'clamp(40px,5vw,66px)', margin: '0 0 12px' }}>Explore Amsterdam</h3>
                 <p style={{ fontWeight: 600, fontSize: 17.5, color: 'rgba(255,255,255,.92)', margin: '0 0 24px', maxWidth: 430, textShadow: '0 2px 14px rgba(0,0,0,.4)' }}>Our featured travel experience, carefully designed with culture, discovery and unforgettable moments.</p>
@@ -137,7 +164,7 @@ function Home({ go }) {
     position: 'relative',
     borderRadius: 'var(--r-lg)',
     overflow: 'hidden',
-    minHeight: 460,
+    minHeight: 360,
     background: 'var(--ink)',
     color: '#fff',
     padding: 38,

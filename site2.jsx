@@ -35,16 +35,7 @@ function PackageDetail({ go, params }) {
       <SiteNav go={go} />
 
       {/* HERO */}
-      <section
-        style={{
-          position: 'relative',
-          height: '72vh',
-          minHeight: 540,
-          display: 'flex',
-          alignItems: 'flex-end',
-          overflow: 'hidden'
-        }}
-      >
+      <section className="package-hero">
         <Photo
           scene="amsterdam"
           showLabel={false}
@@ -63,16 +54,7 @@ function PackageDetail({ go, params }) {
 
         <button
           onClick={() => go('home', { anchor: 'discover' })}
-          className="btn btn-sm"
-          style={{
-            position: 'absolute',
-            top: 92,
-            left: 'max(20px, calc((100% - 1240px)/2 + 32px))',
-            zIndex: 4,
-            background: 'rgba(255,255,255,.96)',
-            color: 'var(--ink)',
-            boxShadow: 'var(--shadow-md)'
-          }}
+          className="btn btn-sm package-hero__back"
         >
           <span style={{ transform: 'scaleX(-1)', display: 'inline-flex' }}>
             <Icon name="arrow" size={15} color="var(--ink)" />
@@ -348,7 +330,7 @@ function PackageDetail({ go, params }) {
               }}
               className="grid-2"
             >
-              <div>
+              <div className="detail-main">
                 <div style={{ marginBottom: 30 }}>
                   <button
                     onClick={() => setSelectedPkg(null)}
@@ -527,8 +509,8 @@ function PackageDetail({ go, params }) {
                         .map(id => EXPERIENCES.find(e => e.id === id))
                         .filter(Boolean)
                         .map(e => (
-                          <div key={e.id} className="card" style={{ overflow: 'hidden', display: 'flex' }}>
-                            <div style={{ width: 96, flex: 'none' }}>
+                          <div key={e.id} className="card media-row" style={{ overflow: 'hidden', display: 'flex' }}>
+                            <div className="media-row__thumb" style={{ width: 96, flex: 'none' }}>
                               <Photo scene={e.scene} style={{ height: '100%' }} />
                             </div>
 
@@ -589,8 +571,8 @@ function PackageDetail({ go, params }) {
                             }}
                           />
 
-                          <div className="card" style={{ overflow: 'hidden', display: 'flex', gap: 0 }}>
-                            <div style={{ width: 120, flex: 'none' }}>
+                          <div className="card media-row" style={{ overflow: 'hidden', display: 'flex', gap: 0 }}>
+                            <div className="media-row__thumb" style={{ width: 120, flex: 'none' }}>
                               <Photo scene={it.scene} style={{ height: '100%' }} />
                             </div>
 
@@ -869,18 +851,8 @@ function PackageDetail({ go, params }) {
                       Sample departures for prototype enquiry flow.
                     </p>
 
-                    <div className="card" style={{ overflow: 'hidden' }}>
-                      <div
-                        style={{
-                          display: 'grid',
-                          gridTemplateColumns: '1.5fr 1fr 1fr 1.1fr',
-                          padding: '14px 22px',
-                          background: 'var(--ink)',
-                          color: '#fff',
-                          fontWeight: 800,
-                          fontSize: 13
-                        }}
-                      >
+                    <div className="card depart-table" style={{ overflow: 'hidden' }}>
+                      <div className="depart-row depart-row--head">
                         <span>Departure</span>
                         <span>Twin Sharing</span>
                         <span>Single</span>
@@ -888,16 +860,7 @@ function PackageDetail({ go, params }) {
                       </div>
 
                       {det.departures.map((d, i) => (
-                        <div
-                          key={d.date}
-                          style={{
-                            display: 'grid',
-                            gridTemplateColumns: '1.5fr 1fr 1fr 1.1fr',
-                            padding: '16px 22px',
-                            alignItems: 'center',
-                            borderBottom: i < det.departures.length - 1 ? '1px solid var(--line)' : 'none'
-                          }}
-                        >
+                        <div key={d.date} className="depart-row" style={{ borderBottom: i < det.departures.length - 1 ? '1px solid var(--line)' : 'none' }}>
                           <span style={{ fontWeight: 700, fontSize: 14.5 }}>
                             {d.date}
                           </span>

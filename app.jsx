@@ -39,8 +39,8 @@ function Booking({ go, params, toast }) {
   return (
     <div>
       <SiteNav go={go} />
-      <section style={{ minHeight: '100vh', padding: '120px 0 80px', background: 'var(--paper)' }}>
-        <div className="wrap" style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: 48, alignItems: 'start' }}>
+      <section className="booking-page" style={{ minHeight: '100vh', padding: '120px 0 80px', background: 'var(--paper)' }}>
+        <div className="wrap layout-booking" style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: 48, alignItems: 'start' }}>
           {/* Main Form */}
           <div>
             <button onClick={() => go('package', { id: pkgId })} className="btn btn-ghost btn-sm" style={{ marginBottom: 24, animation: 'fadeUp .4s ease-out' }}>
@@ -79,7 +79,7 @@ function Booking({ go, params, toast }) {
                   {/* Room Type */}
                   <div className="field">
                     <label>Room Preference</label>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                    <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                       {['twin', 'single'].map(type => (
                         <button key={type} onClick={() => updateField('rooms', type)} style={{
                           padding: 14, borderRadius: 'var(--r-sm)', border: formData.rooms === type ? '2px solid var(--green)' : '1.5px solid var(--line-2)',
@@ -138,7 +138,7 @@ function Booking({ go, params, toast }) {
                   </div>
                 </div>
                 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                   <button onClick={() => setStep(1)} className="btn btn-ghost btn-lg" style={{ width: '100%' }}>
                     ← Back
                   </button>
@@ -164,7 +164,7 @@ function Booking({ go, params, toast }) {
           </div>
           
           {/* Sidebar Summary */}
-          <div style={{ position: 'sticky', top: 140 }}>
+          <div className="booking-summary" style={{ position: 'sticky', top: 140 }}>
             <div style={{ background: '#fff', border: '1.5px solid var(--line)', borderRadius: 'var(--r-lg)', padding: 20, animation: 'fadeUp .6s ease-out' }}>
               <div style={{ fontSize: 12, fontWeight: 800, color: 'var(--ink-3)', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: 12 }}>Booking Summary</div>
               <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 16 }}>{packageInfo?.name}</div>
@@ -208,7 +208,7 @@ function DestinationDetail({ go, params }) {
       <SiteNav go={go} />
       
       {/* Hero */}
-      <div style={{ height: '60vh', position: 'relative', minHeight: 400, animation: 'fadeUp .6s ease-out' }}>
+      <div className="dest-hero" style={{ height: '60vh', position: 'relative', minHeight: 400, animation: 'fadeUp .6s ease-out' }}>
         <Photo scene={dest.scene} style={{ height: '100%' }} />
       </div>
       
@@ -232,7 +232,7 @@ function DestinationDetail({ go, params }) {
             </p>
             
             {/* Highlights */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 60, animation: 'fadeUp .8s ease-out' }}>
+            <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 60, animation: 'fadeUp .8s ease-out' }}>
               {[1, 2, 3, 4].map(i => (
                 <div key={i} style={{ display: 'flex', gap: 12 }}>
                   <div className="dot" />
@@ -245,7 +245,7 @@ function DestinationDetail({ go, params }) {
             </div>
             
             {/* CTA */}
-            <div style={{ display: 'flex', gap: 12, animation: 'fadeUp .9s ease-out' }}>
+            <div className="cta-row" style={{ display: 'flex', gap: 12, animation: 'fadeUp .9s ease-out' }}>
               <button onClick={() => go('package', { id: 'explorer5' })} className="btn btn-green btn-lg">
                 Explore Packages
                 <Icon name="arrow" size={16} color="#04391f" />
@@ -292,6 +292,7 @@ function App() {
       {view === 'destination' && <DestinationDetail go={go} params={params} />}
       {view === 'package' && <PackageDetail go={go} params={params} />}
       {view === 'booking' && <Booking go={go} params={params} toast={toast} />}
+      {view === 'dashboard' && <Dashboard go={go} toast={toast} />}
       <ToastHost toasts={toasts} />
     </>
   );
