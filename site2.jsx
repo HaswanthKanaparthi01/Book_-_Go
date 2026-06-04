@@ -571,43 +571,26 @@ function PackageDetail({ go, params }) {
                             }}
                           />
 
-                          <div className="card media-row" style={{ overflow: 'hidden', display: 'flex', gap: 0 }}>
-                            <div className="media-row__thumb" style={{ width: 120, flex: 'none' }}>
-                              <Photo scene={it.scene} style={{ height: '100%' }} />
-                            </div>
-
-                            <div style={{ padding: '16px 20px' }}>
-                              <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
-                                <span
-                                  style={{
-                                    fontFamily: 'var(--font-display)',
-                                    fontWeight: 900,
-                                    fontSize: 14,
-                                    color: accentInk
-                                  }}
-                                >
-                                  {it.d}
-                                </span>
-
-                                <h3 className="display" style={{ fontSize: 20, margin: 0 }}>
-                                  {it.t}
-                                </h3>
+                          <div className="card itinerary-card" style={{ overflow: 'hidden' }}>
+                            <div className="itinerary-card__inner">
+                              <div className="itinerary-card__thumb">
+                                <Photo scene={it.scene} style={{ height: '100%' }} />
                               </div>
-
-                              <ul
-                                style={{
-                                  margin: '8px 0 0',
-                                  paddingLeft: 18,
-                                  color: 'var(--ink-2)',
-                                  fontWeight: 500,
-                                  fontSize: 14.5,
-                                  lineHeight: 1.6
-                                }}
-                              >
-                                {it.items.map(x => (
-                                  <li key={x}>{x}</li>
-                                ))}
-                              </ul>
+                              <div style={{ padding: '16px 20px' }}>
+                                <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap' }}>
+                                  <span style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 14, color: accentInk }}>
+                                    {it.d}
+                                  </span>
+                                  <h3 className="display" style={{ fontSize: 20, margin: 0 }}>
+                                    {it.t}
+                                  </h3>
+                                </div>
+                                <ul style={{ margin: '8px 0 0', paddingLeft: 18, color: 'var(--ink-2)', fontWeight: 500, fontSize: 14.5, lineHeight: 1.6 }}>
+                                  {it.items.map(x => (
+                                    <li key={x}>{x}</li>
+                                  ))}
+                                </ul>
+                              </div>
                             </div>
                           </div>
                         </div>

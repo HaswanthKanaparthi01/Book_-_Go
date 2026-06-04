@@ -513,3 +513,25 @@ button { -webkit-tap-highlight-color: transparent; }
 
 /* ---------- smooth scroll ---------- */
 html { scroll-behavior: smooth; }
+
+/* ---------- itinerary card — responsive ---------- */
+.itinerary-card__inner {
+  display: flex;
+  gap: 0;
+}
+.itinerary-card__thumb {
+  width: 120px;
+  flex: none;
+  min-height: 110px;
+}
+
+@media (max-width: 520px) {
+  .itinerary-card__inner {
+    flex-direction: column;
+  }
+  .itinerary-card__thumb {
+    width: 100%;
+    height: 160px;
+    min-height: unset;
+  }
+}
