@@ -7,6 +7,7 @@
    photography by replacing the `bg` with a url(). ---- */
 const SCENES = {
   amsterdam: { label: 'amsterdam · canal houses', bg: 'linear-gradient(180deg,#2a4f63 0%,#3f7d86 34%,#7fae9b 56%,#caa45c 74%,#9c7437 100%)', glow: 'radial-gradient(120% 80% at 22% 18%, rgba(255,225,150,.55), transparent 55%)' },
+  hero:      { label: 'amsterdam · red light district', bg: 'linear-gradient(160deg,#0a1230 0%,#2a1f56 42%,#7a1f6a 76%,#15296e 100%)', glow: 'radial-gradient(40% 40% at 70% 64%, rgba(255,70,160,.5), transparent 60%), radial-gradient(30% 30% at 24% 40%, rgba(60,150,255,.5), transparent 60%)' },
   canals:    { label: 'hidden canals · dusk',     bg: 'linear-gradient(180deg,#16414f 0%,#236b6f 40%,#3f9a86 60%,#d3a657 82%,#7c5a2e 100%)', glow: 'radial-gradient(90% 70% at 78% 16%, rgba(255,212,138,.6), transparent 50%)' },
   tulips:    { label: 'keukenhof · tulip fields',  bg: 'linear-gradient(180deg,#bfe2ff 0%,#bfe2ff 28%,#e8438a 38%,#ffd60a 50%,#ff7fae 60%,#34b46a 74%,#1c7d44 100%)', glow: 'radial-gradient(80% 50% at 50% 12%, rgba(255,255,255,.5), transparent 60%)' },
   nightlife: { label: 'amsterdam · after dark',    bg: 'linear-gradient(160deg,#0a1230 0%,#2a1f56 42%,#7a1f6a 76%,#15296e 100%)', glow: 'radial-gradient(40% 40% at 70% 64%, rgba(255,70,160,.5), transparent 60%), radial-gradient(30% 30% at 24% 40%, rgba(60,150,255,.5), transparent 60%)' },
@@ -27,6 +28,7 @@ const SCENES = {
 /* Real, permanent Amsterdam photography (verified Wikimedia Commons thumbnails) */
 const SCENE_IMG = {
   amsterdam: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/KeizersgrachtReguliersgrachtAmsterdam.jpg/1280px-KeizersgrachtReguliersgrachtAmsterdam.jpg',
+  hero:      'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?fm=jpg&q=80&w=1920&auto=format&fit=crop',
   canals:    'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Colorful_canal_houses_at_golden_hour_in_Damrak_avenue_Amsterdam_the_Netherlands.jpg/1280px-Colorful_canal_houses_at_golden_hour_in_Damrak_avenue_Amsterdam_the_Netherlands.jpg',
   tulips:    'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Field_of_red_tulips_near_Keukenhof.jpg/1280px-Field_of_red_tulips_near_Keukenhof.jpg',
   nightlife: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amsterdam_by_night_in_snow_evening_-_at_the_street_Kattenburgergracht.jpg/1280px-Amsterdam_by_night_in_snow_evening_-_at_the_street_Kattenburgergracht.jpg',
@@ -112,59 +114,5 @@ function Icon({ name, size = 18, stroke = 2, color = 'currentColor' }) {
   return <svg {...p}>{paths[name] || null}</svg>;
 }
 
-/* ---- Status badge ---- */
-function StatusBadge({ status }) {
-  const map = {
-    pending:   { t: 'Pending Approval', bg: 'var(--status-pending-bg)', c: 'var(--status-pending)', dot: '#caa400' },
-    approved:  { t: 'Approved',         bg: 'var(--status-approved-bg)', c: 'var(--status-approved)', dot: 'var(--green)' },
-    scheduled: { t: 'Scheduled',        bg: 'var(--status-scheduled-bg)', c: 'var(--status-scheduled)', dot: 'var(--blue)' },
-    published: { t: 'Published',        bg: 'var(--ink)', c: '#fff', dot: 'var(--green)' },
-  };
-  const m = map[status] || map.pending;
-  return (
-    <span className="badge" style={{ background: m.bg, color: m.c }}>
-      <span style={{ width: 7, height: 7, borderRadius: '50%', background: m.dot }} />
-      {m.t}
-    </span>
-  );
-}
 
-/* ---- Instagram creative (the social post format from reference B) ----
-   Top ~60% photo, bottom ~40% bold quote on a bright solid color,
-   BOOK & GO footer. Optional PUBLISHED badge top-left. ---- */
-const POST_BG = {
-  red:    { bg: '#ff4d3d', quote: 'var(--green-ink)', foot: 'rgba(17,77,58,.7)' },
-  pink:   { bg: '#ff5fa2', quote: 'var(--green-ink)', foot: 'rgba(17,77,58,.7)' },
-  yellow: { bg: '#ffd60a', quote: 'var(--green-ink)', foot: 'rgba(74,58,0,.65)' },
-  blue:   { bg: '#1666ff', quote: '#eafaf1',          foot: 'rgba(255,255,255,.72)' },
-  green:  { bg: '#00c46a', quote: 'var(--green-ink)', foot: 'rgba(4,57,31,.7)' },
-};
-
-function InstagramPost({ post, published = false, scale = 1 }) {
-  const c = POST_BG[post.color] || POST_BG.red;
-  return (
-    <div style={{ width: '100%', aspectRatio: '4 / 5', borderRadius: 14, overflow: 'hidden', background: '#fff', boxShadow: 'var(--shadow-md)', display: 'flex', flexDirection: 'column', position: 'relative', containerType: 'inline-size' }}>
-      {/* photo 58% */}
-      <div style={{ flex: '0 0 58%', position: 'relative' }}>
-        <Photo scene={post.scene} showLabel={false} vignette={false} style={{ height: '100%' }} />
-        {published && (
-          <span style={{ position: 'absolute', top: 12, left: 12, background: 'var(--ink)', color: '#fff', fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 11 * 1, letterSpacing: '.12em', padding: '6px 10px', borderRadius: 6 }}>
-            PUBLISHED
-          </span>
-        )}
-      </div>
-      {/* quote 42% */}
-      <div style={{ flex: '1 1 42%', background: c.bg, padding: '7% 7% 6%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-        <p style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 900, lineHeight: .98, letterSpacing: '-0.03em', color: c.quote, fontSize: 'clamp(13px, 6.6cqw, 60px)' }}>
-          <span style={{ opacity: .85 }}>“</span>{post.quote}<span style={{ opacity: .85 }}>”</span>
-        </p>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '6%' }}>
-          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 'clamp(10px,3.4cqw,15px)', letterSpacing: '-0.02em', color: c.quote }}>Book&nbsp;&amp;&nbsp;Go</span>
-          <span style={{ fontWeight: 700, fontSize: 'clamp(8px,2.6cqw,11px)', color: c.foot, letterSpacing: '.04em' }}>{post.handle || '@bookandgo.amsterdam'}</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-Object.assign(window, { SCENES, Photo, Logo, Icon, StatusBadge, InstagramPost, POST_BG });
+Object.assign(window, { SCENES, Photo, Logo, Icon });

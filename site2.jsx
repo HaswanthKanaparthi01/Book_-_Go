@@ -328,7 +328,7 @@ function PackageDetail({ go, params }) {
                 gap: 56,
                 alignItems: 'start'
               }}
-              className="grid-2"
+              className="grid-2 detail-layout"
             >
               <div className="detail-main">
                 <div style={{ marginBottom: 30 }}>

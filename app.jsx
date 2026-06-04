@@ -292,7 +292,6 @@ function App() {
       {view === 'destination' && <DestinationDetail go={go} params={params} />}
       {view === 'package' && <PackageDetail go={go} params={params} />}
       {view === 'booking' && <Booking go={go} params={params} toast={toast} />}
-      {view === 'dashboard' && <Dashboard go={go} toast={toast} />}
       <ToastHost toasts={toasts} />
     </>
   );

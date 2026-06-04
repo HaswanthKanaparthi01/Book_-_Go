@@ -37,10 +37,6 @@ function SiteNav({ go, solid }) {
           ))}
         </nav>
         <div className="nav-actions">
-          <button onClick={() => go('dashboard')} className="btn btn-sm nav-studio"
-            style={{ background: dark ? 'var(--ink)' : 'rgba(255,255,255,.16)', color: '#fff', boxShadow: dark ? 'none' : 'inset 0 0 0 1.5px rgba(255,255,255,.4)', backdropFilter: 'blur(8px)' }}>
-            <Icon name="sparkle" size={15} color={dark ? 'var(--green)' : '#fff'} /> <span className="nav-studio__label">AI Studio</span>
-          </button>
           <button onClick={() => go('booking')} className="btn btn-green btn-sm">Book now</button>
           <button type="button" className="nav-menu-btn" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen}
             onClick={() => setMenuOpen(o => !o)}
@@ -54,7 +50,6 @@ function SiteNav({ go, solid }) {
         {links.map(([t, v]) => (
           <button key={t} type="button" className="nav-drawer__link" onClick={() => runLink(v)}>{t}</button>
         ))}
-        <button type="button" className="nav-drawer__link" onClick={() => { setMenuOpen(false); go('dashboard'); }}>AI Studio</button>
         <button type="button" className="btn btn-green" style={{ width: '100%', marginTop: 8 }} onClick={() => { setMenuOpen(false); go('booking'); }}>Book now</button>
       </div>
     </header>
@@ -128,12 +123,12 @@ function Home({ go }) {
     <div>
       <SiteNav go={go} />
       {/* HERO */}
-      <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
-        <Photo scene="amsterdam" showLabel={false} vignette={false} style={{ position: 'absolute', inset: 0, height: '100%' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,.34) 0%, rgba(0,0,0,.12) 36%, rgba(0,0,0,.1) 60%, rgba(0,0,0,.42) 100%)' }} />
-        <div className="wrap" style={{ position: 'relative', zIndex: 2, paddingTop: 90 }}>
-          <h1 className="display fade-up" style={{ color: '#fbfbf6', fontSize: 'clamp(52px, 8.4vw, 118px)', margin: '0 0 20px', textShadow: '0 4px 40px rgba(0,0,0,.25)' }}>
-            Book here.<br />Go there.
+      <section className="hero">
+        <Photo scene="hero" showLabel={false} vignette={false} style={{ position: 'absolute', inset: 0, height: '100%' }} />
+        <div className="hero__overlay" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,.52) 0%, rgba(0,0,0,.18) 42%, rgba(0,0,0,.12) 60%, rgba(0,0,0,.55) 100%)' }} />
+        <div className="wrap" style={{ position: 'relative', zIndex: 2, paddingTop: 90, width: '100%' }}>
+          <h1 className="display fade-up hero__title" style={{ color: '#fbfbf6', fontSize: 'clamp(52px, 8.4vw, 118px)', margin: '0 0 20px', textShadow: '0 4px 40px rgba(0,0,0,.25)' }}>
+            See the world differently.
           </h1>
           <p className="fade-up" style={{ color: 'rgba(255,255,255,.95)', fontSize: 'clamp(17px,1.9vw,23px)', fontWeight: 600, maxWidth: 500, margin: '0 0 30px', textShadow: '0 2px 18px rgba(0,0,0,.45)' }}>
             Curated travel experiences designed for modern explorers. Discover unique journeys and unforgettable destinations.
@@ -146,7 +141,7 @@ function Home({ go }) {
       <section className="section" id="discover">
         <div className="wrap">
           <SectionHead eyebrow="Book & Go travel agency" title="Choose your destination." />
-          <div style={{ display: 'grid', gridTemplateColumns: '1.12fr 1fr', gap: 22 }} className="grid-2">
+          <div className="dest-grid-2">
             {/* Card 1 — Amsterdam */}
             <button onClick={() => go('package', { id: 'explorer5' })} className="dcard" style={{ position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden', textAlign: 'left', display: 'block', boxShadow: 'var(--shadow-md)', background: 'none', padding: 0 }}>
               <Photo scene="amsterdam" style={{ position: 'absolute', inset: 0, height: '100%' }} />

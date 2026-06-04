@@ -93,54 +93,6 @@ const KEUKENHOF = {
   related: ['cruise', 'photo', 'food'],
 };
 
-/* Trending topics for the AI dashboard */
-const TRENDS = [
-  { id: 't1', topic: 'Hidden Amsterdam Canals', scene: 'canals',    growth: '+212%', volume: '48.2k', platform: 'Instagram', heat: 96 },
-  { id: 't2', topic: 'Best Sunset Spots',       scene: 'sunset',    growth: '+148%', volume: '31.7k', platform: 'Influencers', heat: 88 },
-  { id: 't3', topic: 'Keukenhof Season',        scene: 'tulips',    growth: '+304%', volume: '72.9k', platform: 'Instagram', heat: 99 },
-  { id: 't4', topic: 'Amsterdam Cycling Routes',scene: 'cycling',   growth: '+97%',  volume: '22.1k', platform: 'Travel Blogs', heat: 74 },
-  { id: 't5', topic: 'Amsterdam Nightlife',     scene: 'nightlife', growth: '+131%', volume: '40.3k', platform: 'Discussions', heat: 84 },
-  { id: 't6', topic: 'Van Gogh Museum',         scene: 'vangogh',   growth: '+58%',  volume: '18.6k', platform: 'Travel Blogs', heat: 66 },
-  { id: 't7', topic: 'Giethoorn Day Trip',      scene: 'giethoorn', growth: '+176%', volume: '29.4k', platform: 'Instagram', heat: 90 },
-  { id: 't8', topic: 'Dam Square Photography',  scene: 'dam',       growth: '+44%',  volume: '12.8k', platform: 'Influencers', heat: 58 },
-];
-
-/* Pre-generated example posts (the 4 required) + status seeds */
-const SEED_POSTS = [
-  { id: 'p1', topic: 'Hidden Amsterdam Canals', scene: 'canals',    color: 'red',
-    headline: 'The Amsterdam locals keep to themselves',
-    quote: 'The most beautiful views in Amsterdam aren’t on the tourist map.',
-    caption: 'Slip off the Damrak and into the Jordaan’s quiet canals — where the gables lean, the bikes pile up, and the light does something the postcards never catch. This is the Amsterdam we book people into. 🚲',
-    hashtags: ['#HiddenAmsterdam', '#CanalLife', '#JordaanDistrict', '#BookAndGo', '#VisitAmsterdam'],
-    status: 'pending' },
-  { id: 'p2', topic: 'Keukenhof Season', scene: 'tulips', color: 'yellow',
-    headline: 'Eight weeks. Seven million bulbs.',
-    quote: 'The world’s most colourful spring experience.',
-    caption: 'Keukenhof opens for just eight weeks a year, and every one of its seven million bulbs is planted by hand. Come at opening, beat the coaches, and have the avenues to yourself. 🌷',
-    hashtags: ['#Keukenhof', '#TulipSeason', '#Holland', '#BookAndGo', '#SpringInHolland'],
-    status: 'pending' },
-  { id: 'p3', topic: 'Giethoorn Day Trip', scene: 'giethoorn', color: 'blue',
-    headline: 'The village with no roads',
-    quote: 'Where roads disappear and boats become the streets.',
-    caption: 'Ninety minutes from Amsterdam, Giethoorn trades cars for canals. Glide through on a whisper-boat, past thatched farmhouses and arched wooden bridges. No engines. No rush. 🛶',
-    hashtags: ['#Giethoorn', '#DayTrip', '#Netherlands', '#BookAndGo', '#HiddenHolland'],
-    status: 'approved' },
-  { id: 'p4', topic: 'Amsterdam Nightlife', scene: 'nightlife', color: 'pink',
-    headline: 'Amsterdam doesn’t sleep — it glows',
-    quote: 'Experience Amsterdam after dark.',
-    caption: 'From Jordaan jazz cellars to Noord’s warehouse clubs, the city rewrites itself after sunset. Our local hosts know which doors to knock on. 🌙',
-    hashtags: ['#AmsterdamNightlife', '#AfterDark', '#BookAndGo', '#CityNights', '#VisitAmsterdam'],
-    status: 'published', publishedAt: 'Today at 6:42 PM' },
-];
-
-/* extra ready-to-generate post templates keyed by topic */
-const POST_TEMPLATES = {
-  'Best Sunset Spots': { scene: 'sunset', color: 'red', headline: 'Golden hour has an address', quote: 'Amsterdam saves its best light for the people who slow down.', caption: 'The NEMO rooftop, the Amstel bend, the western islands at low tide — we know exactly where to stand when the sky turns. 🌅', hashtags: ['#GoldenHour', '#AmsterdamSunset', '#BookAndGo', '#VisitAmsterdam'] },
-  'Amsterdam Cycling Routes': { scene: 'cycling', color: 'green', headline: 'See the city the way it was built to be seen', quote: 'In Amsterdam, the best routes don’t have a road.', caption: 'Two wheels, no plan, and 400 km of bike lanes. We map the routes that dodge the crowds and find the canals. 🚲', hashtags: ['#CyclingAmsterdam', '#BikeLife', '#BookAndGo', '#VisitAmsterdam'] },
-  'Van Gogh Museum': { scene: 'vangogh', color: 'blue', headline: 'Two hundred reasons to look closer', quote: 'Stand close enough and the paint starts to move.', caption: 'The world’s largest Van Gogh collection, skip-the-line and timed for the quiet hour. Bring nothing but your eyes. 🎨', hashtags: ['#VanGogh', '#Museumplein', '#BookAndGo', '#ArtLovers'] },
-  'Dam Square Photography': { scene: 'dam', color: 'yellow', headline: 'The heart of the old city, at first light', quote: 'Everyone photographs Dam Square. Almost no one photographs it empty.', caption: 'Be there before the trams and the pigeons own it. Our photo hosts know the 20 minutes that count. 📸', hashtags: ['#DamSquare', '#AmsterdamPhotography', '#BookAndGo', '#VisitAmsterdam'] },
-};
-
 /* Package brochure detail: inclusions / exclusions per package */
 const PACKAGE_DETAILS = {
   escape3: {
@@ -199,39 +151,4 @@ const TERMS = [
 
 const COMING_SOON = ['Paris', 'Switzerland', 'Japan', 'Iceland', 'Scotland', 'Northern Lights'];
 
-/* AI agent system */
-const AGENTS = [
-  { id: '01', name: 'Trend Monitoring Agent', status: 'ONLINE', desc: 'Scans social signals and ranks travel momentum in real time.', load: 96 },
-  { id: '02', name: 'RSS Feed Agent', status: 'SYNCING', desc: 'Pulls travel blogs and publications every hour.', load: 71 },
-  { id: '03', name: 'Content Generation Agent', status: 'PROCESSING', desc: 'Writes headlines, captions and hashtags from each opportunity.', load: 84 },
-  { id: '04', name: 'Image Selection Agent', status: 'ACTIVE', desc: 'Matches topic-specific imagery to every creative.', load: 62 },
-  { id: '05', name: 'Publishing Agent', status: 'ONLINE', desc: 'Schedules and publishes the moment a human approves.', load: 48 },
-];
-const AGENT_STATUS = {
-  ONLINE: { c: 'var(--green-ink)', bg: 'var(--green-soft)', dot: 'var(--green)' },
-  SYNCING: { c: 'var(--status-scheduled)', bg: 'var(--blue-soft)', dot: 'var(--blue)' },
-  PROCESSING: { c: 'var(--status-pending)', bg: 'var(--status-pending-bg)', dot: '#caa400' },
-  ACTIVE: { c: 'var(--green-ink)', bg: 'var(--green-soft)', dot: 'var(--green)' },
-};
-
-const CONTENT_SOURCES = [
-  { name: 'RSS Feeds', ic: 'feed', count: '42 active feeds', note: 'lonelyplanet.com · dutchreview.com · +40' },
-  { name: 'Travel Blogs', ic: 'edit', count: '340 sources', note: 'long-form travel writing' },
-  { name: 'Instagram Trends', ic: 'instagram', count: 'live', note: 'reels, hashtags & geotags' },
-  { name: 'Tourism Websites', ic: 'globe', count: '88 monitored', note: 'iamsterdam.com · holland.com' },
-  { name: 'Travel Publications', ic: 'image', count: '26 feeds', note: 'Condé Nast · TimeOut · AFAR' },
-  { name: 'Destination News', ic: 'bell', count: 'real-time', note: 'events, openings & seasons' },
-];
-
-const AGENT_WORKFLOW = ['RSS feed', 'AI agent reads feed', 'Extract travel opportunities', 'Generate social content', 'Create Instagram creative', 'Human approval', 'Schedule', 'Publish'];
-
-const RSS_ITEMS = [
-  { src: 'DutchReview · RSS', txt: 'Keukenhof confirms 2026 opening date — 7M bulbs planted', topic: 'Keukenhof Season', scene: 'tulips' },
-  { src: 'TimeOut Amsterdam · RSS', txt: 'The 10 best hidden canals only locals know', topic: 'Hidden Amsterdam Canals', scene: 'canals' },
-  { src: 'Lonely Planet · RSS', txt: 'Why Giethoorn is the day trip everyone’s adding in 2026', topic: 'Giethoorn Day Trip', scene: 'giethoorn' },
-  { src: 'Condé Nast · RSS', txt: 'Amsterdam after dark: a new wave of Noord nightlife', topic: 'Amsterdam Nightlife', scene: 'nightlife' },
-  { src: 'iamsterdam.com · RSS', txt: 'Cycling the city: 5 routes that dodge the crowds', topic: 'Amsterdam Cycling Routes', scene: 'cycling' },
-  { src: 'AFAR · RSS', txt: 'Golden hour in Amsterdam — where photographers go', topic: 'Best Sunset Spots', scene: 'sunset' },
-];
-
-Object.assign(window, { DESTINATIONS, EXPERIENCES, PACKAGES, KEUKENHOF, TRENDS, SEED_POSTS, POST_TEMPLATES, PACKAGE_DETAILS, CANCELLATION, TERMS, COMING_SOON, AGENTS, AGENT_STATUS, CONTENT_SOURCES, AGENT_WORKFLOW, RSS_ITEMS });
+Object.assign(window, { DESTINATIONS, EXPERIENCES, PACKAGES, KEUKENHOF, PACKAGE_DETAILS, CANCELLATION, TERMS, COMING_SOON });
