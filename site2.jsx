@@ -59,7 +59,7 @@ function PackageDetail({ go, params }) {
           <span style={{ transform: 'scaleX(-1)', display: 'inline-flex' }}>
             <Icon name="arrow" size={15} color="var(--ink)" />
           </span>
-          Back to trips
+          Back to package
         </button>
 
         <div className="wrap" style={{ position: 'relative', zIndex: 2, paddingBottom: 54 }}>
@@ -90,7 +90,7 @@ function PackageDetail({ go, params }) {
               margin: '0 0 10px'
             }}
           >
-            Explore Amsterdam.
+            Explore Amsterdam
           </h1>
 
           <p
@@ -103,8 +103,7 @@ function PackageDetail({ go, params }) {
               lineHeight: 1.45
             }}
           >
-            Choose from curated Amsterdam packages with itinerary, inclusions,
-            exclusions, hotel details, departure cost and booking support.
+            A 10-day signature journey across Europe and the Alps with premium transfers, curated highlights, private guiding and select meals.
           </p>
         </div>
       </section>
@@ -113,8 +112,8 @@ function PackageDetail({ go, params }) {
       <section className="section" id="amsterdam-packages">
         <div className="wrap">
           <SectionHead
-            eyebrow="Amsterdam travel packages"
-            title="Choose your package."
+            eyebrow="Europe tour package"
+            title="Explore Amsterdam"
           />
 
           <div
@@ -295,13 +294,7 @@ function PackageDetail({ go, params }) {
                         Details
                       </button>
 
-                      <button
-                        onClick={() => go('booking', { pkg: pkg.id })}
-                        className="btn btn-green"
-                        style={{ flex: 1 }}
-                      >
-                        Book Now
-                      </button>
+                      
                     </div>
                   </div>
                 </div>
@@ -574,7 +567,7 @@ function PackageDetail({ go, params }) {
                           <div className="card itinerary-card" style={{ overflow: 'hidden' }}>
                             <div className="itinerary-card__inner">
                               <div className="itinerary-card__thumb">
-                                <Photo scene={it.scene} style={{ height: '100%' }} />
+                                <Photo scene={it.scene} img={it.img} style={{ height: '100%' }} />
                               </div>
                               <div style={{ padding: '16px 20px' }}>
                                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap' }}>
@@ -831,7 +824,7 @@ function PackageDetail({ go, params }) {
                         margin: '0 0 24px'
                       }}
                     >
-                      Sample departures for prototype enquiry flow.
+                      Sample departures enquiry flow.
                     </p>
 
                     <div className="card depart-table" style={{ overflow: 'hidden' }}>

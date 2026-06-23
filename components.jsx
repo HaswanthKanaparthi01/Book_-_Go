@@ -46,9 +46,9 @@ const SCENE_IMG = {
 };
 SCENE_IMG.museum = SCENE_IMG.rijks;
 
-function Photo({ scene = 'amsterdam', label, className = '', style = {}, showLabel = false, vignette = true, children }) {
+function Photo({ scene = 'amsterdam', img, label, className = '', style = {}, showLabel = false, vignette = true, children }) {
   const s = SCENES[scene] || SCENES.amsterdam;
-  const src = SCENE_IMG[scene] || SCENE_IMG.amsterdam;
+  const src = img || SCENE_IMG[scene] || SCENE_IMG.amsterdam;
   const [err, setErr] = React.useState(false);
   return (
     <div className={`photo ${vignette ? 'photo-vignette' : ''} ${className}`} style={{ background: s.bg, ...style }}>

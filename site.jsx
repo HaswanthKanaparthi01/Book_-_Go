@@ -19,7 +19,7 @@ function SiteNav({ go, solid }) {
   }, [menuOpen]);
   useEffect(() => { setMenuOpen(false); }, [solid]);
   const dark = solid || scrolled;
-  const links = [['Trips', 'home#discover'], ['Amsterdam Package', 'package#']];
+  const links = [];
   const navBtnColor = dark ? 'var(--ink)' : 'rgba(255,255,255,.95)';
   const runLink = (v) => {
     setMenuOpen(false);
@@ -29,7 +29,7 @@ function SiteNav({ go, solid }) {
   return (
     <header className={`site-header${dark ? ' site-header--solid' : ''}`}>
       <div className="wrap site-header__inner">
-        <Logo light={!dark} onClick={() => { setMenuOpen(false); go('home'); }} />
+        <Logo light={!dark} size={35} onClick={() => { setMenuOpen(false); go('home'); }} />
         <nav className="nav-links" style={{ display: 'flex', alignItems: 'center', gap: 30 }}>
           {links.map(([t, v]) => (
             <button key={t} onClick={() => runLink(v)}
@@ -37,7 +37,6 @@ function SiteNav({ go, solid }) {
           ))}
         </nav>
         <div className="nav-actions">
-          <button onClick={() => { setMenuOpen(false); go('package', { id: 'explorer5' }); }} className="btn btn-green btn-sm">Book now</button>
           <button type="button" className="nav-menu-btn" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen}
             onClick={() => setMenuOpen(o => !o)}
             style={{ color: navBtnColor }}>
@@ -50,7 +49,7 @@ function SiteNav({ go, solid }) {
         {links.map(([t, v]) => (
           <button key={t} type="button" className="nav-drawer__link" onClick={() => runLink(v)}>{t}</button>
         ))}
-        <button type="button" className="btn btn-green" style={{ width: '100%', marginTop: 8 }} onClick={() => { setMenuOpen(false); go('package', { id: 'explorer5' }); }}>Book now</button>
+        
       </div>
     </header>
   );
@@ -69,10 +68,12 @@ function SiteFooter({ go }) {
               Discover new destinations, unique journeys,
               and unforgettable adventures around the world.
             </p>
+            <div style={{ marginTop: 8 }}>
+              <div className="eyebrow" style={{ color: 'rgba(255,255,255,.85)', marginBottom: 6, fontWeight: 700 }}>Official Operator</div>
+              <div style={{ color: 'rgba(255,255,255,.9)', fontSize: 15, fontWeight: 700 }}>Utrecht · Cayman Islands · Hyderabad</div>
+            </div>
           </div>
-          {[['Explore', ['Destinations', 'Experiences', 'Packages', 'Coming Soon']],
-            ['Company', ['About', 'Local hosts', 'Sustainability', 'Press']],
-            ['Support', ['Contact', 'FAQ', 'Booking terms', 'Privacy']]].map(([h, items]) => (
+          {[].map(([h, items]) => (
             <div key={h}>
               <div className="eyebrow" style={{ color: 'rgba(255,255,255,.5)', marginBottom: 14 }}>{h}</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -82,42 +83,11 @@ function SiteFooter({ go }) {
           ))}
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 28, color: 'rgba(255,255,255,.5)', fontSize: 14, fontWeight: 600, flexWrap: 'wrap', gap: 12 }} className="foot-bottom">
-          <span>© 2026 Book &amp; Go — prototype</span>
-          <span style={{ display: 'flex', gap: 20 }}><span>Worldwide Destinations</span><span>EN · €</span></span>
+          <span>© 2026 Book &amp; Go</span>
+          <span style={{ display: 'flex', gap: 20 }}><span>Worldwide Destinations</span><span></span></span>
         </div>
       </div>
     </footer>
-  );
-}
-
-/* ---------------- Hero search ---------------- */
-function HeroSearch({ go }) {
-  const tabs = ['Search All', 'Packages', 'Experiences', 'Destinations'];
-  const [active, setActive] = useState('Search All');
-  const [q, setQ] = useState('');
-  return (
-    <div style={{ width: '100%', maxWidth: 760 }} className="fade-up">
-      <div style={{ display: 'flex', gap: 4, marginBottom: 14, flexWrap: 'wrap' }}>
-        {tabs.map(t => (
-          <button key={t} onClick={() => setActive(t)}
-            style={{
-              fontWeight: 700, fontSize: 14.5, color: '#fff', padding: '7px 15px',
-              borderRadius: 999, whiteSpace: 'nowrap',
-              background: active === t ? 'rgba(255,255,255,.22)' : 'transparent',
-              boxShadow: active === t ? 'inset 0 0 0 1.5px rgba(255,255,255,.55)' : 'none',
-              textShadow: '0 1px 10px rgba(0,0,0,.5)',
-              backdropFilter: active === t ? 'blur(8px)' : 'none'
-            }}>{t}</button>
-        ))}
-      </div>
-      <div className="hero-search-bar">
-        <span className="hero-search-bar__icon"><Icon name="search" size={22} color="var(--ink-3)" /></span>
-        <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search destinations, packages…"
-          onKeyDown={e => e.key === 'Enter' && go('home', { anchor: 'discover' })}
-          className="hero-search-bar__input" />
-        <button onClick={() => go('home', { anchor: 'discover' })} className="btn btn-green hero-search-bar__btn">Search</button>
-      </div>
-    </div>
   );
 }
 
@@ -133,12 +103,13 @@ function Home({ go }) {
         <div className="hero__overlay" style={{
           background: 'linear-gradient(180deg, rgba(0,0,0,.60) 0%, rgba(0,0,0,.48) 38%, rgba(0,0,0,.40) 60%, rgba(0,0,0,.65) 100%)'
         }} />
-        <div className="wrap" style={{ position: 'relative', zIndex: 2, paddingTop: 90, width: '100%' }}>
+        <div className="wrap" style={{ position: 'relative', zIndex: 2, paddingTop: 90, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
           <h1 className="display fade-up hero__title" style={{
             color: '#ffffff',
             fontSize: 'clamp(52px, 8.4vw, 118px)',
             margin: '0 0 20px',
-            textShadow: '0 2px 24px rgba(0,0,0,.55)'
+            textShadow: '0 2px 24px rgba(0,0,0,.55)',
+            maxWidth: 1100
           }}>
             See the world differently.
           </h1>
@@ -146,13 +117,12 @@ function Home({ go }) {
             color: 'rgba(255,255,255,.96)',
             fontSize: 'clamp(17px,1.9vw,23px)',
             fontWeight: 600,
-            maxWidth: 500,
+            maxWidth: 770,
             margin: '0 0 30px',
             textShadow: '0 2px 14px rgba(0,0,0,.6)'
           }}>
             Curated travel experiences designed for modern explorers. Discover unique journeys and unforgettable destinations.
           </p>
-          <HeroSearch go={go} />
         </div>
       </section>
 
@@ -189,7 +159,7 @@ function Home({ go }) {
                 </span>
                 <h3 className="display" style={{ fontSize: 'clamp(40px,5vw,66px)', margin: '0 0 12px' }}>Explore Amsterdam</h3>
                 <p style={{ fontWeight: 600, fontSize: 17.5, color: 'rgba(255,255,255,.92)', margin: '0 0 24px', maxWidth: 430, textShadow: '0 2px 14px rgba(0,0,0,.4)' }}>
-                  Our featured travel experience, carefully designed with culture, discovery and unforgettable moments.
+                  A 10-day signature journey across Europe and the Alps with premium transfers, curated highlights and carefully chosen meals.
                 </p>
                 <span className="btn btn-green" style={{ alignSelf: 'flex-start' }}>
                   View Package <Icon name="arrow" size={18} color="#04391f" />

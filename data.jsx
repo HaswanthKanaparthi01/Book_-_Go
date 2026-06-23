@@ -24,47 +24,91 @@ const EXPERIENCES = [
 
 const PACKAGES = [
   {
-    id: 'escape3', name: '3-Day Amsterdam Escape', nights: '3 days · 2 nights', price: 549, tier: 'Essential',
-    color: 'green', scene: 'canals',
-    blurb: 'The icons, done beautifully — canals, masters & a long weekend that feels twice as long.',
-    highlights: ['Canal-side boutique hotel', 'Private 75-min canal cruise', 'Skip-the-line Van Gogh Museum', 'Guided old-city walk'],
-    includes: ['2 nights central 4★ stay', 'Daily breakfast', 'Private canal cruise', 'All museum entries', 'Airport transfers', '24/7 local concierge'],
+    id: 'explorer5',
+    name: 'Explore Amsterdam',
+    nights: '9 nights · 10 days',
+    price: 1990,
+    groupNote: 'Minimum 10 people · custom quote available for smaller groups',
+    tier: 'Signature',
+    color: 'yellow',
+    scene: 'amsterdam',
+    featured: true,
+    blurb: 'A 10-day signature journey across Amsterdam, Paris, the Swiss Alps and Innsbruck with premium transfers, curated highlights and selected meals.',
+    highlights: ['Arrival & Welcome in Amsterdam', 'Giethoorn whisper-boat village outing', 'Golden Age Amsterdam canal cruise', 'Brussels transit to Paris', 'Paris landmarks and Disneyland magic', 'Mount Titlis, Jungfraujoch and Innsbruck'],
+    includes: ['Return Economy Class Airfare', 'Airport transfers', '9 nights hotel accommodation', 'Daily breakfast', 'Selected lunches and dinners', 'Guided sightseeing and attraction entry fees', 'Chauffeured transfers across Amsterdam, Paris, Switzerland and Innsbruck', 'Dedicated tour host and local support'],
     itinerary: [
-      { d: 'Day 1', t: 'Arrival & the Golden Bend', scene: 'canals', items: ['Private transfer to your canal-side hotel', 'Welcome cruise along the Herengracht', 'Dinner in the Nine Streets'] },
-      { d: 'Day 2', t: 'Masters & the Museumplein', scene: 'vangogh', items: ['Skip-the-line Van Gogh Museum', 'Lunch at the Rijksmuseum garden', 'Free afternoon in the Jordaan'] },
-      { d: 'Day 3', t: 'Markets & farewell', scene: 'jordaan', items: ['Albert Cuyp market stroll', 'Stroopwafel tasting', 'Departure transfer'] },
-    ],
-  },
-  {
-    id: 'explorer5', name: '5-Day Amsterdam Explorer', nights: '5 days · 4 nights', price: 989, tier: 'Most Popular',
-    color: 'yellow', scene: 'tulips', featured: true,
-    blurb: 'City classics plus the countryside — tulip fields, Giethoorn’s waterways and time to wander.',
-    highlights: ['Keukenhof & tulip fields', 'Giethoorn day trip', 'Dutch food tour', 'Free curated days'],
-    includes: ['4 nights central 4★ stay', 'Daily breakfast', 'Keukenhof + bulb fields', 'Giethoorn whisper-boat day', 'Dutch food tour', 'All museum entries', 'Airport transfers', '24/7 local concierge'],
-    itinerary: [
-      { d: 'Day 1', t: 'Arrival & canals', scene: 'canals', items: ['Private transfer & check-in', 'Evening canal cruise', 'Dinner in De Pijp'] },
-      { d: 'Day 2', t: 'Art & icons', scene: 'rijks', items: ['Rijksmuseum highlights', 'Van Gogh Museum', 'Jordaan café crawl'] },
-      { d: 'Day 3', t: 'Keukenhof & tulips', scene: 'tulips', items: ['Keukenhof gardens', 'Bulb fields of Lisse', 'Photo stop at the windmills'] },
-      { d: 'Day 4', t: 'Giethoorn day trip', scene: 'giethoorn', items: ['Whisper-boat through the village', 'Lakeside lunch', 'Return at golden hour'] },
-      { d: 'Day 5', t: 'Flavours & farewell', scene: 'food', items: ['Dutch food tour', 'Last canal-side coffee', 'Departure transfer'] },
-    ],
-  },
-  {
-    id: 'premium7', name: '7-Day Premium Amsterdam', nights: '7 days · 6 nights', price: 1690, tier: 'Premium',
-    color: 'blue', scene: 'nightlife',
-    blurb: 'The unhurried version — private guides, a photographer, nightlife and a canal-house suite.',
-    highlights: ['Canal-house suite', 'Private photographer day', 'Curated nightlife evening', 'Everything in Explorer, slower'],
-    includes: ['6 nights canal-house suite', 'Daily breakfast', 'Private city guide (2 days)', 'Photography tour', 'Keukenhof & Giethoorn', 'Curated nightlife evening', 'Private transfers throughout', '24/7 local concierge'],
-    itinerary: [
-      { d: 'Day 1', t: 'Arrival in style', scene: 'canals', items: ['Private transfer to canal-house suite', 'Champagne welcome cruise'] },
-      { d: 'Day 2', t: 'The masters, privately', scene: 'vangogh', items: ['Private-guide Van Gogh & Rijksmuseum', 'Lunch on the Museumplein'] },
-      { d: 'Day 3', t: 'Tulips & windmills', scene: 'tulips', items: ['Keukenhof at opening', 'Zaanse Schans windmills'] },
-      { d: 'Day 4', t: 'Giethoorn & the lakes', scene: 'giethoorn', items: ['Private whisper-boat', 'Lakeside long lunch'] },
-      { d: 'Day 5', t: 'Through a lens', scene: 'photo', items: ['Private photographer half-day', 'Free afternoon'] },
-      { d: 'Day 6', t: 'Flavours & nightlife', scene: 'food', items: ['Dutch food tour', 'Curated nightlife evening'] },
-      { d: 'Day 7', t: 'A slow farewell', scene: 'jordaan', items: ['Jordaan morning', 'Departure transfer'] },
-    ],
-  },
+      {
+        d: 'Day 01',
+        t: 'Arrival & Welcome',
+        scene: 'amsterdam',
+        img: 'Images/day1.png',
+        items: ['Arrive at Amsterdam Airport (AMS) and meet your private tour host', 'Private transfer to your hotel', 'Relax and enjoy a welcome briefing over local Dutch treats', 'Overnight stay in Amsterdam']
+      },
+      {
+        d: 'Day 02',
+        t: 'Giethoorn Village Outing',
+        scene: 'giethoorn',
+        img: 'Images/day2.png',
+        items: ['Breakfast at the hotel', 'Travel to Giethoorn, the Venice of the North', 'Private whisper-quiet electric boat ride past thatched cottages and wooden bridges', 'Return to Amsterdam for overnight stay']
+      },
+      {
+        d: 'Day 03',
+        t: 'Amsterdam Canals',
+        scene: 'canals',
+        img: 'Images/day3.png',
+        items: ['Breakfast at hotel', 'Discover the Golden Age canal ring and Jordaan architecture', 'Visit legendary museum treasures', 'Sunset cruise as the bridges glow blue', 'Overnight in Amsterdam']
+      },
+      {
+        d: 'Day 04',
+        t: 'Transit to Paris via Brussels',
+        scene: 'photo',
+        img: 'Images/day4.png',
+        items: ['Breakfast in Amsterdam', 'Premium chauffeured van transfer through Brussels', 'Scenic stop at Grand Place and Atomium', 'Continue to Paris and check in at your hotel', 'Overnight stay in Paris']
+      },
+      {
+        d: 'Day 05',
+        t: 'Paris Iconic Landmarks',
+        scene: 'museum',
+        img: 'Images/day5.png',
+        items: ['Breakfast at hotel', 'Guided visits to the Eiffel Tower, Louvre and Notre-Dame', 'Seine river cruise and Montmartre artist steps', 'Golden-hour viewpoints with photographer documentation', 'Overnight stay in Paris']
+      },
+      {
+        d: 'Day 06',
+        t: 'Disneyland Paris Magic',
+        scene: 'nightlife',
+        img: 'Images/day6.png',
+        items: ['Breakfast at hotel', 'Full day at Disneyland Park and Walt Disney Studios', 'Enjoy parades, thrill rides and firework spectacles', 'Return to Paris hotel for overnight stay']
+      },
+      {
+        d: 'Day 07',
+        t: 'Zurich & Mount Titlis Summit',
+        scene: 'sunset',
+        img: 'Images/day7.png',
+        items: ['Breakfast in Paris', 'Transfer to Switzerland via Zurich', 'Ride the Rotair cable car to Mt. Titlis', 'Cross the glacier cliff walk and explore ice tunnels', 'Overnight stay in Switzerland']
+      },
+      {
+        d: 'Day 08',
+        t: 'Jungfraujoch & Interlaken',
+        scene: 'photo',
+        img: 'Images/day8.png',
+        items: ['Breakfast at hotel', 'Summit the Top of Europe at Jungfraujoch', 'Visit the Sphinx Observatory and Aletsch Glacier', 'Descend to Interlaken and explore lakeside scenery', 'Overnight stay in Switzerland']
+      },
+      {
+        d: 'Day 09',
+        t: 'Innsbruck Alpine Valley',
+        scene: 'dam',
+        img: 'Images/day9.png',
+        items: ['Breakfast at hotel', 'Admire the Golden Roof in Innsbruck', 'Ascend the Nordkette cable car for Alpine valley views', 'Enjoy an elegant Austrian dinner in historic squares', 'Overnight stay in Innsbruck']
+      },
+      {
+        d: 'Day 10',
+        t: 'Zurich Departure Flight',
+        scene: 'amsterdam',
+        img: 'Images/day10.png',
+        items: ['Breakfast at hotel', 'Final morning of Swiss luxury shopping and lake views', 'Private transfer to Zurich Airport (ZRH)', 'Depart with memories documented forever']
+      }
+    ]
+  }
 ];
 
 /* Keukenhof destination detail content */
@@ -95,42 +139,41 @@ const KEUKENHOF = {
 
 /* Package brochure detail: inclusions / exclusions per package */
 const PACKAGE_DETAILS = {
-  escape3: {
-    hotel: { name: 'Canal House Boutique Hotel', rating: 4, area: 'The Nine Streets · Centrum', room: 'Deluxe Canal-View Room', nights: '2 nights', amenities: ['Free Wi-Fi', 'Daily breakfast', 'Bikes included', 'Canal views', '24h reception', 'Air conditioning'] },
-    departures: [
-      { date: 'Fri 13 Mar 2026', twin: 549, single: 739, status: 'Available' },
-      { date: 'Fri 03 Apr 2026', twin: 579, single: 769, status: 'Filling fast' },
-      { date: 'Fri 24 Apr 2026', twin: 599, single: 799, status: 'Available' },
-      { date: 'Fri 15 May 2026', twin: 559, single: 749, status: 'Available' },
-    ],
-    inclusions: ['Hotel accommodation · 2 nights 4★', 'Airport transfers', 'Daily breakfast', 'Private 75-min canal cruise', 'Attraction tickets (Van Gogh Museum)', 'Guided old-city walking tour', '24/7 local concierge'],
-    exclusions: ['International flights', 'Personal expenses', 'Lunch & dinner', 'Optional activities', 'Additional shopping', 'Tips & gratuities', 'Travel insurance'],
-    exp: ['cruise', 'museum', 'food'],
-  },
   explorer5: {
-    hotel: { name: 'Grachtengordel Canal Hotel', rating: 4, area: 'Jordaan · Centrum', room: 'Superior Canal Room', nights: '4 nights', amenities: ['Free Wi-Fi', 'Daily breakfast', 'Bikes included', 'Canal views', 'Concierge desk', 'Fitness room'] },
+    hotel: {
+      name: '3★ hotels, villas & cabins',
+      rating: 3,
+      area: 'Amsterdam · Paris · Switzerland · Innsbruck',
+      room: 'Standard Twin or Double Room',
+      nights: '9 nights',
+      amenities: ['Continental breakfast, lunch & dinner — vegetarian, served at Indian restaurants', 'Free Wi-Fi', 'Private transfers', '24/7 support']
+    },
     departures: [
-      { date: 'Wed 12 Jun 2026', twin: 989, single: 1290, status: 'Available' },
-      { date: 'Wed 19 Jun 2026', twin: 1049, single: 1350, status: 'Filling fast' },
-      { date: 'Wed 26 Jun 2026', twin: 1089, single: 1390, status: 'Available' },
-      { date: 'Wed 03 Jul 2026', twin: 999, single: 1299, status: 'Available' },
+      { date: 'Sat 13 Apr 2026', twin: 2499, single: 3299, status: 'Available' },
+      { date: 'Sat 27 Apr 2026', twin: 2499, single: 3299, status: 'Available' },
+      { date: 'Sat 11 May 2026', twin: 2499, single: 3299, status: 'Available' },
+      { date: 'Sat 25 May 2026', twin: 2499, single: 3299, status: 'Available' }
     ],
-    inclusions: ['Hotel accommodation · 4 nights 4★', 'Airport transfers', 'Daily breakfast', 'All attraction tickets', 'Keukenhof + bulb fields entry', 'Giethoorn whisper-boat day trip', 'Dutch food tour', 'Guided tours throughout', '24/7 local concierge'],
-    exclusions: ['International flights', 'Personal expenses', 'Lunch & dinner (except food tour)', 'Optional activities', 'Additional shopping', 'Tips & gratuities', 'Travel insurance'],
-    exp: ['cruise', 'tulip', 'food', 'museum'],
-  },
-  premium7: {
-    hotel: { name: 'Golden Bend Suite Collection', rating: 5, area: 'Golden Bend · Grachtengordel', room: 'Premier Canal-House Suite', nights: '6 nights', amenities: ['Free Wi-Fi', 'À la carte breakfast', 'Private transfers', 'Butler service', 'Canal-house suite', 'Spa & wellness access'] },
-    departures: [
-      { date: 'Mon 13 Jun 2026', twin: 1690, single: 2190, status: 'Available' },
-      { date: 'Mon 20 Jun 2026', twin: 1790, single: 2290, status: 'Limited' },
-      { date: 'Mon 27 Jun 2026', twin: 1850, single: 2350, status: 'Available' },
-      { date: 'Mon 04 Jul 2026', twin: 1720, single: 2220, status: 'Available' },
+    inclusions: [
+      'Return Economy Class Airfare',
+      'Airport transfers',
+      '9 nights hotel accommodation',
+      'Continental breakfast daily',
+      'Vegetarian lunch & dinner at Indian restaurants',
+      'Guided sightseeing and attraction entry fees',
+      'Transfers between Amsterdam, Paris, Switzerland and Innsbruck',
+      'Local assistance throughout the tour'
     ],
-    inclusions: ['International flights', 'Canal-house suite · 6 nights', 'Private airport transfers', 'Daily breakfast', 'All attraction tickets', 'Private guided tours (2 days)', 'Keukenhof & Giethoorn', 'Private photography tour', 'Curated nightlife evening', 'Travel insurance', 'Visa assistance', '24/7 local concierge'],
-    exclusions: ['Personal expenses', 'Lunch & dinner', 'Additional shopping', 'Tips & gratuities', 'Extra transportation'],
-    exp: ['cruise', 'photo', 'nightlife', 'food', 'museum'],
-  },
+    exclusions: [
+      'Personal expenses',
+      'Lunch & dinner where not specified',
+      'Optional activities & tickets',
+      'Additional shopping',
+      'Tips & gratuities',
+      'Travel insurance'
+    ],
+    exp: ['cruise', 'tulip', 'food', 'museum', 'photo']
+  }
 };
 
 const CANCELLATION = [
