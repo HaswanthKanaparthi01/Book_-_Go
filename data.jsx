@@ -2,6 +2,27 @@
    BOOK & GO — data
    ============================================================ */
 
+/* Generates the next `count` upcoming Saturdays starting at least
+   `leadDays` from today, so departure dates never go stale. */
+function getUpcomingSaturdays(count = 4, leadDays = 21, gapDays = 14) {
+  const dates = [];
+  const today = new Date();
+  let d = new Date(today);
+  d.setDate(d.getDate() + leadDays);
+  // roll forward to the next Saturday (0=Sun ... 6=Sat)
+  while (d.getDay() !== 6) d.setDate(d.getDate() + 1);
+  for (let i = 0; i < count; i++) {
+    dates.push(new Date(d));
+    d.setDate(d.getDate() + gapDays);
+  }
+  const fmt = (dt) => dt.toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' }).replace(',', '');
+  return dates.map(fmt);
+}
+
+function buildDepartures(twin, single, count = 4) {
+  return getUpcomingSaturdays(count).map(date => ({ date, twin, single, status: 'Available' }));
+}
+
 const DESTINATIONS = [
   { id: 'canals',    scene: 'canals',    name: 'Amsterdam Canals',  tag: 'UNESCO Heritage',  blurb: '17th-century waterways & gabled houses', from: 39 },
   { id: 'vangogh',   scene: 'vangogh',   name: 'Van Gogh Museum',   tag: 'Art & Culture',    blurb: 'The world’s largest Van Gogh collection', from: 24 },
@@ -27,7 +48,7 @@ const PACKAGES = [
     id: 'explorer5',
     name: 'Explore Amsterdam',
     nights: '9 nights · 10 days',
-    price: 2499,
+    price: 1990,
     tier: 'Signature',
     color: 'yellow',
     scene: 'amsterdam',
@@ -147,12 +168,7 @@ const PACKAGE_DETAILS = {
       nights: '9 nights',
       amenities: ['Daily breakfast', 'Hot Indian dinner on arrival', 'Free Wi-Fi', 'Private transfers', '24/7 support']
     },
-    departures: [
-      { date: 'Sat 13 Apr 2026', twin: 2499, single: 3299, status: 'Available' },
-      { date: 'Sat 27 Apr 2026', twin: 2499, single: 3299, status: 'Available' },
-      { date: 'Sat 11 May 2026', twin: 2499, single: 3299, status: 'Available' },
-      { date: 'Sat 25 May 2026', twin: 2499, single: 3299, status: 'Available' }
-    ],
+    departures: buildDepartures(1990, 2790),
     inclusions: [
       'Return flights',
       'Airport transfers',
