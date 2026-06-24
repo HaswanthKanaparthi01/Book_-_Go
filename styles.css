@@ -321,7 +321,7 @@ textarea.input { font-size: 15px; line-height: 1.5; padding: 14px 16px; }
 html { overflow-x: clip; }
 
 @media (max-width: 1200px){
-  .layout-booking { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .layout-booking { grid-template-columns: minmax(0, 1fr) !important; gap: 32px !important; }
   .booking-summary { position: static !important; top: auto !important; }
 }
 
@@ -381,7 +381,7 @@ html { overflow-x: clip; }
 }
 
 @media (max-width: 680px){
-  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr !important; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: minmax(0, 1fr) !important; }
 }
 
 /* hide scrollbar utility */
@@ -455,7 +455,7 @@ html { overflow-x: clip; }
   gap: 22px;
 }
 @media (max-width: 760px) {
-  .dest-grid-2 { grid-template-columns: 1fr !important; }
+  .dest-grid-2 { grid-template-columns: minmax(0, 1fr) !important; }
   .hero { height: 100svh; min-height: 500px; max-height: none; }
   .hero__title { font-size: clamp(44px, 12vw, 80px) !important; }
 }
@@ -491,7 +491,7 @@ html { overflow-x: clip; }
 /* ---------- detail rail stacks on mobile ---------- */
 @media (max-width: 920px) {
   .detail-layout {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: minmax(0, 1fr) !important;
   }
   .detail-rail {
     position: static !important;

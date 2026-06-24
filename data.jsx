@@ -27,15 +27,14 @@ const PACKAGES = [
     id: 'explorer5',
     name: 'Explore Amsterdam',
     nights: '9 nights · 10 days',
-    price: 1990,
-    groupNote: 'Minimum 10 people · custom quote available for smaller groups',
+    price: 2499,
     tier: 'Signature',
     color: 'yellow',
     scene: 'amsterdam',
     featured: true,
     blurb: 'A 10-day signature journey across Amsterdam, Paris, the Swiss Alps and Innsbruck with premium transfers, curated highlights and selected meals.',
     highlights: ['Arrival & Welcome in Amsterdam', 'Giethoorn whisper-boat village outing', 'Golden Age Amsterdam canal cruise', 'Brussels transit to Paris', 'Paris landmarks and Disneyland magic', 'Mount Titlis, Jungfraujoch and Innsbruck'],
-    includes: ['Return Economy Class Airfare', 'Airport transfers', '9 nights hotel accommodation', 'Daily breakfast', 'Selected lunches and dinners', 'Guided sightseeing and attraction entry fees', 'Chauffeured transfers across Amsterdam, Paris, Switzerland and Innsbruck', 'Dedicated tour host and local support'],
+    includes: ['Return flights', 'Airport transfers', '9 nights hotel accommodation', 'Daily breakfast', 'Selected lunches and dinners', 'Guided sightseeing and attraction entry fees', 'Chauffeured transfers across Amsterdam, Paris, Switzerland and Innsbruck', 'Dedicated tour host and local support'],
     itinerary: [
       {
         d: 'Day 01',
@@ -141,12 +140,12 @@ const KEUKENHOF = {
 const PACKAGE_DETAILS = {
   explorer5: {
     hotel: {
-      name: '3★ hotels, villas & cabins',
+      name: 'Best Western Amstelveen or similar 3★ hotel',
       rating: 3,
       area: 'Amsterdam · Paris · Switzerland · Innsbruck',
       room: 'Standard Twin or Double Room',
       nights: '9 nights',
-      amenities: ['Continental breakfast, lunch & dinner — vegetarian, served at Indian restaurants', 'Free Wi-Fi', 'Private transfers', '24/7 support']
+      amenities: ['Daily breakfast', 'Hot Indian dinner on arrival', 'Free Wi-Fi', 'Private transfers', '24/7 support']
     },
     departures: [
       { date: 'Sat 13 Apr 2026', twin: 2499, single: 3299, status: 'Available' },
@@ -155,11 +154,11 @@ const PACKAGE_DETAILS = {
       { date: 'Sat 25 May 2026', twin: 2499, single: 3299, status: 'Available' }
     ],
     inclusions: [
-      'Return Economy Class Airfare',
+      'Return flights',
       'Airport transfers',
       '9 nights hotel accommodation',
-      'Continental breakfast daily',
-      'Vegetarian lunch & dinner at Indian restaurants',
+      'Daily breakfast',
+      'Selected lunches and dinners',
       'Guided sightseeing and attraction entry fees',
       'Transfers between Amsterdam, Paris, Switzerland and Innsbruck',
       'Local assistance throughout the tour'

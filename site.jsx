@@ -84,7 +84,7 @@ function SiteFooter({ go }) {
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 28, color: 'rgba(255,255,255,.5)', fontSize: 14, fontWeight: 600, flexWrap: 'wrap', gap: 12 }} className="foot-bottom">
           <span>© 2026 Book &amp; Go</span>
-          <span style={{ display: 'flex', gap: 20 }}><span>Worldwide Destinations</span><span></span></span>
+          <span style={{ display: 'flex', gap: 20 }}><span>Worldwide Destinations</span><span>EN · €</span></span>
         </div>
       </div>
     </footer>
