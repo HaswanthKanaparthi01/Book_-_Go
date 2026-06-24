@@ -495,7 +495,7 @@ function PackageDetail({ go, params }) {
                         margin: '0 0 22px'
                       }}
                     >
-                      Highlights from Day 2 to Day 9 of your journey.
+                      Highlights from your journey.
                     </p>
 
                     <div
