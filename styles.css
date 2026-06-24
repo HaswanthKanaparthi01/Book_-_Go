@@ -448,6 +448,55 @@ html { overflow-x: clip; }
   line-height: 0.95 !important;
 }
 
+.home-hero-stage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  max-height: 1080px;
+  overflow: hidden;
+}
+.home-hero-stage__layer {
+  transition: opacity 0.5s ease;
+}
+.home-hero-stage .section {
+  padding: 0;
+}
+body.home-stage-lock {
+  overflow: hidden;
+  height: 100vh;
+}
+@media (max-width: 760px) {
+  .home-hero-stage { max-height: none; height: 100vh; }
+}
+
+/* Hide duplicate logo when footer is shown as its own full-screen state on Home
+   (nav bar already shows the logo) — layout itself now matches every other page */
+.home-footer-centered .logo-btn {
+  display: none !important;
+}
+
+/* Contact form — dark/compact variant for footer integration */
+.contact-form--dark input:focus,
+.contact-form--dark textarea:focus {
+  outline: none;
+  border-color: var(--green) !important;
+  background: rgba(0,196,106,.06) !important;
+}
+.contact-form--dark input::placeholder,
+.contact-form--dark textarea::placeholder {
+  color: rgba(255,255,255,.35);
+}
+
+/* Footer with embedded form — stack to one column earlier (tablet + mobile) */
+@media (max-width: 1024px) {
+  .foot-grid--with-form {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+}
+
+
 /* ---------- destination grid responsive ---------- */
 .dest-grid-2 {
   display: grid;

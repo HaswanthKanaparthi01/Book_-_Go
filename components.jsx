@@ -46,14 +46,29 @@ const SCENE_IMG = {
 };
 SCENE_IMG.museum = SCENE_IMG.rijks;
 
-function Photo({ scene = 'amsterdam', img, label, className = '', style = {}, showLabel = false, vignette = true, children }) {
+/* Generic, reliable fallback photo used if a scene/custom image fails to load */
+const FALLBACK_IMG = 'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?fm=jpg&q=80&w=1280&auto=format&fit=crop';
+
+function Photo({ scene = 'amsterdam', img, label, className = '', style = {}, showLabel = false, vignette = true, priority = false, children }) {
   const s = SCENES[scene] || SCENES.amsterdam;
-  const src = img || SCENE_IMG[scene] || SCENE_IMG.amsterdam;
-  const [err, setErr] = React.useState(false);
+  const primarySrc = img || SCENE_IMG[scene] || SCENE_IMG.amsterdam;
+  // stage: 0 = try primary image, 1 = try generic fallback photo, 2 = give up, show gradient
+  const [stage, setStage] = React.useState(0);
+  React.useEffect(() => { setStage(0); }, [primarySrc]);
+  const src = stage === 0 ? primarySrc : stage === 1 ? FALLBACK_IMG : null;
   return (
     <div className={`photo ${vignette ? 'photo-vignette' : ''} ${className}`} style={{ background: s.bg, ...style }}>
-      {src && !err
-        ? <img src={src} alt={label || s.label} loading="lazy" onError={() => setErr(true)} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+      {src
+        ? <img
+            key={src}
+            src={src}
+            alt={label || s.label}
+            loading={priority ? 'eager' : 'lazy'}
+            decoding="async"
+            fetchPriority={priority ? 'high' : 'auto'}
+            onError={() => setStage(st => st + 1)}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          />
         : <><div className="photo-grain" />{s.glow && <div className="photo-glow" style={{ background: s.glow }} />}</>}
       {showLabel && <span className="photo-tag">◦ {label || s.label}</span>}
       {children}
@@ -65,7 +80,7 @@ function Photo({ scene = 'amsterdam', img, label, className = '', style = {}, sh
 function Logo({ light = false, size = 22, onClick }) {
   const ink = light ? '#fff' : 'var(--ink)';
   return (
-    <button onClick={onClick} style={{ display: 'flex', alignItems: 'center', gap: 9, background: 'none' }}>
+    <button className="logo-btn" onClick={onClick} style={{ display: 'flex', alignItems: 'center', gap: 9, background: 'none' }}>
       <span style={{ width: size, height: size, borderRadius: 7, background: 'var(--green)', display: 'grid', placeItems: 'center', flex: 'none', boxShadow: '0 2px 8px rgba(0,196,106,.4)' }}>
         <span style={{ width: size * 0.34, height: size * 0.34, borderRadius: 3, background: '#04391f' }} />
       </span>
@@ -110,9 +125,159 @@ function Icon({ name, size = 18, stroke = 2, color = 'currentColor' }) {
     filter: <path d="M3 5h18l-7 8v6l-4-2v-4Z" />,
     menu: <><path d="M4 7h16M4 12h16M4 17h16" /></>,
     instagram: <><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1.1" fill={color} stroke="none" /></>,
+    plane: <path d="M21 3 11 13M21 3l-7 18-4-8-8-4Z" />,
+    passport: <><rect x="5" y="2" width="14" height="20" rx="2" /><circle cx="12" cy="9" r="2.6" /><path d="M8.5 16.5h7M12 11.6V13" /></>,
+    utensils: <><path d="M6 2v8a2 2 0 0 0 4 0V2M8 10v12" /><path d="M17 2c-1.5 1.6-2.2 3.6-2.2 6.4 0 2 1 3.6 2.2 4.1V22" /></>,
+    home: <><path d="M3 11.5 12 4l9 7.5" /><path d="M5.5 10v10h13V10" /></>,
+    camera: <><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z" /><circle cx="12" cy="13.5" r="3.5" /></>,
   };
   return <svg {...p}>{paths[name] || null}</svg>;
 }
 
 
-Object.assign(window, { SCENES, Photo, Logo, Icon });
+/* ---- Contact Us form (frontend-only) ---- */
+function ContactForm({ title = 'Contact Us', subtitle, dark = false }) {
+  const [form, setForm] = React.useState({ name: '', email: '', phone: '', message: '' });
+  const [errors, setErrors] = React.useState({});
+  const [submitted, setSubmitted] = React.useState(false);
+
+  const update = (field, val) => {
+    setForm(f => ({ ...f, [field]: val }));
+    if (errors[field]) setErrors(e => ({ ...e, [field]: null }));
+  };
+
+  const validate = () => {
+    const e = {};
+    if (!form.name.trim()) e.name = 'Please enter your name.';
+    if (!form.email.trim()) e.email = 'Please enter your email.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) e.email = 'Please enter a valid email address.';
+    if (!form.message.trim()) e.message = 'Please enter a message.';
+    return e;
+  };
+
+  const handleSubmit = (ev) => {
+    ev.preventDefault();
+    const e = validate();
+    setErrors(e);
+    if (Object.keys(e).length > 0) return;
+    // Frontend-only for now — no email service / API call yet.
+    setSubmitted(true);
+    setForm({ name: '', email: '', phone: '', message: '' });
+  };
+
+  const fieldStyle = dark ? {
+    width: '100%',
+    padding: '10px 12px',
+    borderRadius: 'var(--r-sm)',
+    border: '1.5px solid rgba(255,255,255,.16)',
+    fontSize: 14,
+    fontFamily: 'var(--font-text)',
+    boxSizing: 'border-box',
+    background: 'rgba(255,255,255,.05)',
+    color: '#fff'
+  } : {
+    width: '100%',
+    padding: '12px 14px',
+    borderRadius: 'var(--r-sm)',
+    border: '1.5px solid var(--line)',
+    fontSize: 14.5,
+    fontFamily: 'var(--font-text)',
+    boxSizing: 'border-box',
+    background: '#fff'
+  };
+  const errorFieldStyle = { ...fieldStyle, border: '1.5px solid #e14d4d' };
+  const labelStyle = dark
+    ? { display: 'block', fontSize: 12.5, fontWeight: 700, color: 'rgba(255,255,255,.55)', marginBottom: 5 }
+    : { display: 'block', fontSize: 13, fontWeight: 700, color: 'var(--ink-3)', marginBottom: 6 };
+  const errorTextStyle = { color: dark ? '#ff8a8a' : '#e14d4d', fontSize: 12, fontWeight: 600, marginTop: 4 };
+
+  const formBody = submitted ? (
+    <div style={{
+      background: dark ? 'rgba(0,196,106,.12)' : 'var(--green-soft)',
+      border: '1.5px solid var(--green)',
+      borderRadius: 'var(--r-md)',
+      padding: dark ? '14px 16px' : '18px 20px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 12
+    }}>
+      <span style={{ width: 26, height: 26, borderRadius: '50%', background: 'var(--green)', display: 'grid', placeItems: 'center', flex: 'none' }}>
+        <Icon name="check" size={14} color="#04391f" />
+      </span>
+      <span style={{ fontWeight: 700, fontSize: 14, color: dark ? '#fff' : 'var(--ink)' }}>Thank you, we'll contact you soon.</span>
+    </div>
+  ) : (
+    <form onSubmit={handleSubmit} className={dark ? 'contact-form--dark' : ''} style={{ display: 'grid', gap: dark ? 12 : 18, marginTop: subtitle ? 0 : (dark ? 4 : 22) }} noValidate>
+      <div>
+        <label style={labelStyle}>Name *</label>
+        <input
+          type="text"
+          value={form.name}
+          onChange={(e) => update('name', e.target.value)}
+          placeholder="Your full name"
+          style={errors.name ? errorFieldStyle : fieldStyle}
+        />
+        {errors.name && <div style={errorTextStyle}>{errors.name}</div>}
+      </div>
+
+      <div>
+        <label style={labelStyle}>Email *</label>
+        <input
+          type="email"
+          value={form.email}
+          onChange={(e) => update('email', e.target.value)}
+          placeholder="you@example.com"
+          style={errors.email ? errorFieldStyle : fieldStyle}
+        />
+        {errors.email && <div style={errorTextStyle}>{errors.email}</div>}
+      </div>
+
+      <div>
+        <label style={labelStyle}>Phone Number</label>
+        <input
+          type="tel"
+          value={form.phone}
+          onChange={(e) => update('phone', e.target.value)}
+          placeholder="+31 6 12 34 56 78"
+          style={fieldStyle}
+        />
+      </div>
+
+      <div>
+        <label style={labelStyle}>Message *</label>
+        <textarea
+          value={form.message}
+          onChange={(e) => update('message', e.target.value)}
+          placeholder="Tell us about your trip..."
+          rows={dark ? 3 : 4}
+          style={{ ...(errors.message ? errorFieldStyle : fieldStyle), resize: 'vertical', fontFamily: 'var(--font-text)' }}
+        />
+        {errors.message && <div style={errorTextStyle}>{errors.message}</div>}
+      </div>
+
+      <button type="submit" className="btn btn-green" style={{ width: '100%', justifyContent: 'center', padding: dark ? '11px 18px' : undefined }}>
+        Submit <Icon name="arrow" size={15} color="#04391f" />
+      </button>
+    </form>
+  );
+
+  if (dark) {
+    return (
+      <div>
+        {title && <h3 className="display" style={{ fontSize: 21, margin: '0 0 4px', color: '#fff' }}>{title}</h3>}
+        {subtitle && <p style={{ color: 'rgba(255,255,255,.55)', fontSize: 13.5, margin: '0 0 14px' }}>{subtitle}</p>}
+        {formBody}
+      </div>
+    );
+  }
+
+  return (
+    <div className="card" style={{ padding: 28 }}>
+      <h3 className="display" style={{ fontSize: 26, margin: '0 0 4px' }}>{title}</h3>
+      {subtitle && <p style={{ color: 'var(--ink-2)', fontSize: 14.5, margin: '0 0 22px' }}>{subtitle}</p>}
+      {formBody}
+    </div>
+  );
+}
+
+Object.assign(window, { SCENES, Photo, Logo, Icon, ContactForm });

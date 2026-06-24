@@ -41,6 +41,7 @@ function PackageDetail({ go, params }) {
           scene="amsterdam"
           showLabel={false}
           vignette={false}
+          priority
           style={{ position: 'absolute', inset: 0, height: '100%' }}
         />
 
@@ -494,7 +495,7 @@ function PackageDetail({ go, params }) {
                         margin: '0 0 22px'
                       }}
                     >
-                      The curated experiences included in this package.
+                      Highlights from Day 2 to Day 9 of your journey.
                     </p>
 
                     <div
@@ -505,18 +506,20 @@ function PackageDetail({ go, params }) {
                       }}
                       className="grid-2"
                     >
-                      {(det.exp || [])
-                        .map(id => EXPERIENCES.find(e => e.id === id))
-                        .filter(Boolean)
-                        .map(e => (
-                          <div key={e.id} className="card media-row" style={{ overflow: 'hidden', display: 'flex' }}>
+                      {selected.itinerary
+                        .filter(it => {
+                          const dayNum = parseInt(it.d.replace(/\D/g, ''), 10);
+                          return dayNum >= 2 && dayNum <= 9;
+                        })
+                        .map(it => (
+                          <div key={it.d} className="card media-row" style={{ overflow: 'hidden', display: 'flex' }}>
                             <div className="media-row__thumb" style={{ width: 96, flex: 'none' }}>
-                              <Photo scene={e.scene} style={{ height: '100%' }} />
+                              <Photo scene={it.scene} img={it.img} style={{ height: '100%' }} />
                             </div>
 
                             <div style={{ padding: '14px 16px' }}>
                               <h3 className="display" style={{ fontSize: 18, margin: '0 0 4px' }}>
-                                {e.name}
+                                {it.t}
                               </h3>
 
                               <p
@@ -528,11 +531,48 @@ function PackageDetail({ go, params }) {
                                   lineHeight: 1.4
                                 }}
                               >
-                                {e.note}
+                                {it.items[0]}
                               </p>
                             </div>
                           </div>
                         ))}
+                    </div>
+
+                    {/* Premium Amenities */}
+                    <div className="eyebrow" style={{ marginTop: 48, marginBottom: 10 }}>Premium Amenities</div>
+                    <h3 className="display" style={{ fontSize: 28, margin: '0 0 22px' }}>
+                      All-inclusive. No surprises.
+                    </h3>
+
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(3,1fr)',
+                        gap: 16
+                      }}
+                      className="grid-3"
+                    >
+                      {[
+                        { icon: 'passport', title: 'Visa & Schengen Fees', note: 'Schengen documentation, consular appointments, photo fees & priority scheduling included.' },
+                        { icon: 'plane', title: 'To and Fro Flights', note: 'Round-trip premium flights with gourmet in-flight catering and seamless transit comfort.' },
+                        { icon: 'utensils', title: 'Fine Vegetarian Dining', note: "100% pure vegetarian. Fully loaded breakfast, chef's choice lunch stops & custom-timed alpine meals." },
+                        { icon: 'home', title: 'Luxury Alpine Stays', note: 'Boutique canal-side houses in Amsterdam and stunning mountain resorts in the Swiss Alps.' },
+                        { icon: 'camera', title: 'Dedicated Photographer', note: 'Stunning cinematic vertical reels, high-definition portraits & prompt daily visual updates throughout the trip.' }
+                      ].map(a => (
+                        <div key={a.title} className="card" style={{ padding: 22 }}>
+                          <span style={{
+                            width: 44, height: 44, borderRadius: '50%',
+                            background: 'var(--green-soft)', display: 'grid', placeItems: 'center',
+                            marginBottom: 14
+                          }}>
+                            <Icon name={a.icon} size={20} color="var(--green-ink)" />
+                          </span>
+                          <h3 className="display" style={{ fontSize: 17, margin: '0 0 6px' }}>{a.title}</h3>
+                          <p style={{ margin: 0, color: 'var(--ink-2)', fontWeight: 500, fontSize: 13.5, lineHeight: 1.5 }}>
+                            {a.note}
+                          </p>
+                        </div>
+                      ))}
                     </div>
                   </>
                 )}

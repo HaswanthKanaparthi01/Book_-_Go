@@ -44,9 +44,11 @@ function SiteNav({ go, solid }) {
 /* ---------------- Footer ---------------- */
 function SiteFooter({ go }) {
   return (
-    <footer style={{ background: 'var(--ink)', color: '#fff', padding: '72px 0 40px' }}>
+    <footer style={{ background: 'var(--ink)', color: '#fff', padding: '64px 0 40px' }}>
       <div className="wrap">
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr', gap: 40, paddingBottom: 48, borderBottom: '1px solid rgba(255,255,255,.12)' }} className="foot-grid">
+        <div className="foot-grid foot-grid--with-form" style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 56, alignItems: 'start', paddingBottom: 40, borderBottom: '1px solid rgba(255,255,255,.12)' }}>
+
+          {/* LEFT — existing footer content, unchanged */}
           <div>
             <Logo light />
             <p style={{ color: 'rgba(255,255,255,.62)', maxWidth: 320, marginTop: 16, lineHeight: 1.5, fontSize: 15 }}>
@@ -54,20 +56,40 @@ function SiteFooter({ go }) {
               Discover new destinations, unique journeys,
               and unforgettable adventures around the world.
             </p>
-            <div style={{ marginTop: 8 }}>
-              <div className="eyebrow" style={{ color: 'rgba(255,255,255,.85)', marginBottom: 6, fontWeight: 700 }}>Official Operator</div>
-              <div style={{ color: 'rgba(255,255,255,.9)', fontSize: 15, fontWeight: 700 }}>Utrecht · Cayman Islands · Hyderabad</div>
-            </div>
-          </div>
-          {[].map(([h, items]) => (
-            <div key={h}>
-              <div className="eyebrow" style={{ color: 'rgba(255,255,255,.5)', marginBottom: 14 }}>{h}</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {items.map(i => <a key={i} style={{ color: 'rgba(255,255,255,.8)', fontWeight: 600, fontSize: 15 }}>{i}</a>)}
+            <div style={{
+              marginTop: 20,
+              background: 'rgba(255,255,255,.04)',
+              border: '1px solid rgba(255,255,255,.1)',
+              borderRadius: 'var(--r-md)',
+              padding: '18px 22px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 14
+            }}>
+              <div>
+                <div className="eyebrow" style={{ color: 'rgba(255,255,255,.5)', marginBottom: 6 }}>Official Operator</div>
+                <div style={{ fontWeight: 800, fontSize: 15, marginBottom: 4 }}>Utrecht · Cayman Islands · Hyderabad</div>
+                <div style={{ color: 'rgba(255,255,255,.55)', fontSize: 13.5 }}>
+                  KVK - 68682409 <span style={{ color: 'rgba(255,255,255,.4)' }}>(Chamber of Commerce Number)</span>
+                </div>
+              </div>
+              <div>
+                <div className="eyebrow" style={{ color: 'rgba(255,255,255,.5)', marginBottom: 6 }}>Direct Inquiries</div>
+                <div style={{ fontWeight: 800, fontSize: 15, marginBottom: 4 }}>
+                  +31614664830 <span style={{ color: 'rgba(255,255,255,.4)', fontWeight: 600 }}>|</span> +310685806568
+                </div>
+                <div style={{ color: 'rgba(255,255,255,.55)', fontSize: 13.5 }}>Mon - Sun · 24/7 Alpine Assistance Team</div>
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* RIGHT — compact Contact Us form */}
+          <div className="foot-contact-form">
+            <ContactForm title="Contact Us" dark />
+          </div>
+
         </div>
+
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 28, color: 'rgba(255,255,255,.5)', fontSize: 14, fontWeight: 600, flexWrap: 'wrap', gap: 12 }} className="foot-bottom">
           <span>© 2026 Book &amp; Go</span>
           <span style={{ display: 'flex', gap: 20 }}><span>Worldwide Destinations</span><span>EN · €</span></span>
@@ -79,100 +101,176 @@ function SiteFooter({ go }) {
 
 /* ---------------- Home ---------------- */
 function Home({ go }) {
+  const [stage, setStage] = React.useState(0); // 0 = Top, 1 = Middle, 2 = Footer
+  const lockRef = React.useRef(false);
+  const stageRef = React.useRef(0);
+  stageRef.current = stage;
+
+  React.useEffect(() => {
+    const TRANSITION_MS = 650;
+
+    const goTo = (next) => {
+      if (next === stageRef.current) return;
+      if (next < 0 || next > 2) return;
+      lockRef.current = true;
+      setStage(next);
+      setTimeout(() => { lockRef.current = false; }, TRANSITION_MS);
+    };
+
+    const onWheel = (e) => {
+      e.preventDefault();
+      if (lockRef.current) return;
+      if (e.deltaY > 8) goTo(stageRef.current + 1);
+      else if (e.deltaY < -8) goTo(stageRef.current - 1);
+    };
+
+    let touchStartY = null;
+    const onTouchStart = (e) => { touchStartY = e.touches[0].clientY; };
+    const onTouchMove = (e) => { e.preventDefault(); };
+    const onTouchEnd = (e) => {
+      if (touchStartY == null) return;
+      const dy = touchStartY - e.changedTouches[0].clientY;
+      touchStartY = null;
+      if (lockRef.current) return;
+      if (dy > 30) goTo(stageRef.current + 1);
+      else if (dy < -30) goTo(stageRef.current - 1);
+    };
+
+    const onKey = (e) => {
+      if (lockRef.current) return;
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); goTo(stageRef.current + 1); }
+      else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); goTo(stageRef.current - 1); }
+    };
+
+    document.body.classList.add('home-stage-lock');
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
+    window.addEventListener('keydown', onKey);
+
+    return () => {
+      document.body.classList.remove('home-stage-lock');
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('touchend', onTouchEnd);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, []);
+
+  const layerStyle = (idx) => ({
+    position: 'absolute', inset: 0,
+    zIndex: stage === idx ? 2 : 1,
+    opacity: stage === idx ? 1 : 0,
+    pointerEvents: stage === idx ? 'auto' : 'none',
+    display: 'flex', alignItems: 'center', justifyContent: 'center'
+  });
+
   return (
     <div>
       <SiteNav go={go} />
 
-      {/* HERO */}
-      <section className="hero">
-        <Photo scene="hero" showLabel={false} vignette={false} style={{ position: 'absolute', inset: 0, height: '100%' }} />
-        <div className="hero__overlay" style={{
-          background: 'linear-gradient(180deg, rgba(0,0,0,.60) 0%, rgba(0,0,0,.48) 38%, rgba(0,0,0,.40) 60%, rgba(0,0,0,.65) 100%)'
-        }} />
-        <div className="wrap" style={{ position: 'relative', zIndex: 2, paddingTop: 90, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-          <h1 className="display fade-up hero__title" style={{
-            color: '#ffffff',
-            fontSize: 'clamp(52px, 8.4vw, 118px)',
-            margin: '0 0 20px',
-            textShadow: '0 2px 24px rgba(0,0,0,.55)',
-            maxWidth: 1100
-          }}>
-            See the world differently.
-          </h1>
-          <p className="fade-up" style={{
-            color: 'rgba(255,255,255,.96)',
-            fontSize: 'clamp(17px,1.9vw,23px)',
-            fontWeight: 600,
-            maxWidth: 770,
-            margin: '0 0 30px',
-            textShadow: '0 2px 14px rgba(0,0,0,.6)'
-          }}>
-            Curated travel experiences designed for modern explorers. Discover unique journeys and unforgettable destinations.
-          </p>
-        </div>
-      </section>
+      {/* TOP / MIDDLE / FOOTER — 3 fixed-screen snap-fade states, home page only */}
+      <div className="home-hero-stage">
 
-      {/* CHOOSE DESTINATION */}
-      <section className="section" id="discover">
-        <div className="wrap">
-          <SectionHead eyebrow="Book & Go travel agency" title="Choose your destination." />
-          <div className="dest-grid-2">
-
-            {/* Card 1 — Amsterdam */}
-            <button onClick={() => go('package', { id: 'explorer5' })} className="dcard" style={{
-              position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden',
-              textAlign: 'left', display: 'block', boxShadow: 'var(--shadow-md)',
-              background: 'none', padding: 0
+        {/* TOP */}
+        <section className="hero home-hero-stage__layer" style={layerStyle(0)}>
+          <Photo scene="hero" showLabel={false} vignette={false} priority style={{ position: 'absolute', inset: 0, height: '100%' }} />
+          <div className="hero__overlay" style={{
+            background: 'linear-gradient(180deg, rgba(0,0,0,.60) 0%, rgba(0,0,0,.48) 38%, rgba(0,0,0,.40) 60%, rgba(0,0,0,.65) 100%)'
+          }} />
+          <div className="wrap" style={{ position: 'relative', zIndex: 2, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+            <h1 className="display fade-up hero__title" style={{
+              color: '#ffffff',
+              fontSize: 'clamp(52px, 8.4vw, 118px)',
+              margin: '0 0 20px',
+              textShadow: '0 2px 24px rgba(0,0,0,.55)',
+              maxWidth: 1100
             }}>
-              <Photo scene="amsterdam" style={{ position: 'absolute', inset: 0, height: '100%' }} />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 36%, rgba(0,0,0,.82) 100%)' }} />
-              <div className="dest-card-body" style={{
-                position: 'relative', zIndex: 2, minHeight: 460,
-                display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
-                padding: 38, color: '#fff'
-              }}>
-                <span className="chip" style={{
-                  alignSelf: 'flex-start',
-                  background: '#ffffff',
-                  color: 'var(--ink)',
-                  boxShadow: '0 2px 16px rgba(0,0,0,.35)',
-                  marginBottom: 'auto',
-                  whiteSpace: 'nowrap',
-                  fontWeight: 800
-                }}>
-                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--green)', flexShrink: 0 }} />
-                  Available now
-                </span>
-                <h3 className="display" style={{ fontSize: 'clamp(40px,5vw,66px)', margin: '0 0 12px' }}>Explore Amsterdam</h3>
-                <p style={{ fontWeight: 600, fontSize: 17.5, color: 'rgba(255,255,255,.92)', margin: '0 0 24px', maxWidth: 430, textShadow: '0 2px 14px rgba(0,0,0,.4)' }}>
-                  A 10-day signature journey across Europe and the Alps with premium transfers, curated highlights and carefully chosen meals.
-                </p>
-                <span className="btn btn-green" style={{ alignSelf: 'flex-start' }}>
-                  View Package <Icon name="arrow" size={18} color="#04391f" />
-                </span>
-              </div>
-            </button>
-
-            {/* Card 2 — Coming Soon */}
-            <div style={{
-              position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden',
-              minHeight: 360, background: 'var(--ink)', color: '#fff',
-              padding: 38, display: 'flex', flexDirection: 'column', justifyContent: 'center'
+              See the world differently.
+            </h1>
+            <p className="fade-up" style={{
+              color: 'rgba(255,255,255,.96)',
+              fontSize: 'clamp(17px,1.9vw,23px)',
+              fontWeight: 600,
+              maxWidth: 770,
+              margin: 0,
+              textShadow: '0 2px 14px rgba(0,0,0,.6)'
             }}>
-              <div className="eyebrow" style={{ color: 'var(--green)', marginBottom: 18 }}>Coming Soon</div>
-              <h3 className="display" style={{ fontSize: 'clamp(34px,4vw,52px)', margin: '0 0 20px' }}>
-                More places.<br />More stories.<br />More adventures.
-              </h3>
-              <p style={{ color: 'rgba(255,255,255,.75)', fontSize: 17, lineHeight: 1.6, maxWidth: 420, margin: 0 }}>
-                New travel experiences are currently being prepared and will be available soon.
-              </p>
-            </div>
-
+              Curated travel experiences designed for modern explorers. Discover unique journeys and unforgettable destinations.
+            </p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <SiteFooter go={go} />
+        {/* MIDDLE — Choose your destination */}
+        <section className="section home-hero-stage__layer" id="discover" style={{ ...layerStyle(1), background: 'var(--paper)', overflowY: 'auto' }}>
+          <div className="wrap">
+            <SectionHead eyebrow="Book & Go travel agency" title="Choose your destination." />
+            <div className="dest-grid-2">
+
+              {/* Card 1 — Amsterdam */}
+              <button onClick={() => go('package', { id: 'explorer5' })} className="dcard" style={{
+                position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden',
+                textAlign: 'left', display: 'block', boxShadow: 'var(--shadow-md)',
+                background: 'none', padding: 0
+              }}>
+                <Photo scene="amsterdam" style={{ position: 'absolute', inset: 0, height: '100%' }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 36%, rgba(0,0,0,.82) 100%)' }} />
+                <div className="dest-card-body" style={{
+                  position: 'relative', zIndex: 2, minHeight: 460,
+                  display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
+                  padding: 38, color: '#fff'
+                }}>
+                  <span className="chip" style={{
+                    alignSelf: 'flex-start',
+                    background: '#ffffff',
+                    color: 'var(--ink)',
+                    boxShadow: '0 2px 16px rgba(0,0,0,.35)',
+                    marginBottom: 'auto',
+                    whiteSpace: 'nowrap',
+                    fontWeight: 800
+                  }}>
+                    <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--green)', flexShrink: 0 }} />
+                    Available now
+                  </span>
+                  <h3 className="display" style={{ fontSize: 'clamp(40px,5vw,66px)', margin: '0 0 12px' }}>Explore Amsterdam</h3>
+                  <p style={{ fontWeight: 600, fontSize: 17.5, color: 'rgba(255,255,255,.92)', margin: '0 0 24px', maxWidth: 430, textShadow: '0 2px 14px rgba(0,0,0,.4)' }}>
+                    A 10-day signature journey across Europe and the Alps with premium transfers, curated highlights and carefully chosen meals.
+                  </p>
+                  <span className="btn btn-green" style={{ alignSelf: 'flex-start' }}>
+                    View Package <Icon name="arrow" size={18} color="#04391f" />
+                  </span>
+                </div>
+              </button>
+
+              {/* Card 2 — Coming Soon */}
+              <div style={{
+                position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden',
+                minHeight: 360, background: 'var(--ink)', color: '#fff',
+                padding: 38, display: 'flex', flexDirection: 'column', justifyContent: 'center'
+              }}>
+                <div className="eyebrow" style={{ color: 'var(--green)', marginBottom: 18 }}>Coming Soon</div>
+                <h3 className="display" style={{ fontSize: 'clamp(34px,4vw,52px)', margin: '0 0 20px' }}>
+                  More places.<br />More stories.<br />More adventures.
+                </h3>
+                <p style={{ color: 'rgba(255,255,255,.75)', fontSize: 17, lineHeight: 1.6, maxWidth: 420, margin: 0 }}>
+                  New travel experiences are currently being prepared and will be available soon.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* FOOTER — separate final screen state */}
+        <section className="home-hero-stage__layer" style={{ ...layerStyle(2), background: 'var(--ink)', overflowY: 'auto', alignItems: 'flex-start' }}>
+          <div className="home-footer-centered" style={{ width: '100%' }}>
+            <SiteFooter go={go} />
+          </div>
+        </section>
+
+      </div>
     </div>
   );
 }
