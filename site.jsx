@@ -36,20 +36,6 @@ function SiteNav({ go, solid }) {
               style={{ fontWeight: 700, fontSize: 15.5, color: navBtnColor, textShadow: dark ? 'none' : '0 1px 12px rgba(0,0,0,.3)' }}>{t}</button>
           ))}
         </nav>
-        <div className="nav-actions">
-          <button type="button" className="nav-menu-btn" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen}
-            onClick={() => setMenuOpen(o => !o)}
-            style={{ color: navBtnColor }}>
-            <Icon name={menuOpen ? 'x' : 'menu'} size={22} color="currentColor" />
-          </button>
-        </div>
-      </div>
-      {menuOpen && <button type="button" className="nav-backdrop" aria-label="Close menu" onClick={() => setMenuOpen(false)} />}
-      <div className={`nav-drawer${menuOpen ? ' nav-drawer--open' : ''}`}>
-        {links.map(([t, v]) => (
-          <button key={t} type="button" className="nav-drawer__link" onClick={() => runLink(v)}>{t}</button>
-        ))}
-        
       </div>
     </header>
   );

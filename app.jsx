@@ -16,7 +16,7 @@ function ToastHost({ toasts }) {
 /* Booking flow */
 function Booking({ go, params, toast }) {
   const [step, setStep] = React.useState(1);
-  const [formData, setFormData] = React.useState({ travelers: 1, name: '', email: '', rooms: 'twin', requests: '' });
+  const [formData, setFormData] = React.useState({ travelers: 10, name: '', email: '', rooms: 'twin', requests: '' });
   
   const pkgId = params.pkg || 'explorer5';
   const pkg = PACKAGE_DETAILS[pkgId];
@@ -56,12 +56,17 @@ function Booking({ go, params, toast }) {
                   {/* Travelers */}
                   <div className="field">
                     <label>Number of Travelers</label>
-                    <select value={formData.travelers} onChange={(e) => updateField('travelers', parseInt(e.target.value))} className="input" style={{ appearance: 'none', paddingRight: 32, cursor: 'pointer' }}>
-                      <option value="1">1 Traveler</option>
-                      <option value="2">2 Travelers</option>
-                      <option value="3">3 Travelers</option>
-                      <option value="4">4+ Travelers</option>
-                    </select>
+                    <div className="input" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'default' }}>
+                      <span style={{ fontWeight: 700 }}>10 Travelers</span>
+                      <span style={{ fontSize: 12.5, color: 'var(--ink-3)', fontWeight: 600 }}>Minimum group size</span>
+                    </div>
+                    <p style={{ fontSize: 13, color: 'var(--ink-3)', marginTop: 8, marginBottom: 0 }}>
+                      This package price requires a minimum group of 10. Travelling in a smaller group?{' '}
+                      <a href="mailto:hello@bookandgo.example" style={{ color: 'var(--ink)', fontWeight: 700, textDecoration: 'underline' }}>
+                        Contact our support team
+                      </a>{' '}
+                      for a custom quote.
+                    </p>
                   </div>
                   
                   {/* Name */}

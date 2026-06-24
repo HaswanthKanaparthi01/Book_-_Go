@@ -5,6 +5,7 @@ function PackageDetail({ go, params }) {
   const [selectedPkg, setSelectedPkg] = useState(null);
   const [tab, setTab] = useState('overview');
   const [selectedDates, setSelectedDates] = useState(null);
+  const [customDateInput, setCustomDateInput] = useState('');
 
   const selected = selectedPkg;
   const det = selected ? (PACKAGE_DETAILS[selected.id] || PACKAGE_DETAILS.explorer5) : null;
@@ -272,6 +273,12 @@ function PackageDetail({ go, params }) {
                         per person
                       </span>
                     </div>
+
+                    {pkg.groupNote && (
+                      <div style={{ fontSize: 12.5, color: 'var(--ink-3)', fontWeight: 600, marginTop: -8, marginBottom: 14 }}>
+                        {pkg.groupNote}
+                      </div>
+                    )}
 
                     <div style={{ display: 'flex', gap: 10 }}>
                       <button
@@ -1014,7 +1021,7 @@ function PackageDetail({ go, params }) {
 
                   <p
                     style={{
-                      margin: '0 0 20px',
+                      margin: '0 0 6px',
                       color: 'var(--ink-3)',
                       fontWeight: 600,
                       fontSize: 14
@@ -1022,6 +1029,19 @@ function PackageDetail({ go, params }) {
                   >
                     per person · {selected.nights}
                   </p>
+
+                  {selected.groupNote && (
+                    <p
+                      style={{
+                        margin: '0 0 20px',
+                        color: 'var(--ink-3)',
+                        fontWeight: 600,
+                        fontSize: 12.5
+                      }}
+                    >
+                      {selected.groupNote}
+                    </p>
+                  )}
 
                   <div
                     style={{
@@ -1069,17 +1089,9 @@ function PackageDetail({ go, params }) {
                         </label>
                         <input
                           type="date"
-                          onChange={(e) => {
-                            if (e.target.value) {
-                              const date = new Date(e.target.value);
-                              setSelectedDates({
-                                date: date.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }),
-                                twin: selected.price,
-                                single: Math.round(selected.price * 1.3),
-                                status: 'Custom'
-                              });
-                            }
-                          }}
+                          value={customDateInput}
+                          min={new Date().toISOString().split('T')[0]}
+                          onChange={(e) => setCustomDateInput(e.target.value)}
                           style={{
                             width: '100%',
                             padding: '10px 12px',
@@ -1087,9 +1099,28 @@ function PackageDetail({ go, params }) {
                             border: '1.5px solid var(--line)',
                             fontSize: 14,
                             fontFamily: 'var(--font-text)',
-                            boxSizing: 'border-box'
+                            boxSizing: 'border-box',
+                            marginBottom: 10
                           }}
                         />
+                        <button
+                          type="button"
+                          disabled={!customDateInput}
+                          className="btn btn-primary btn-sm"
+                          style={{ width: '100%', opacity: customDateInput ? 1 : 0.5 }}
+                          onClick={() => {
+                            if (!customDateInput) return;
+                            const date = new Date(customDateInput + 'T00:00:00');
+                            setSelectedDates({
+                              date: date.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }),
+                              twin: selected.price,
+                              single: Math.round(selected.price * 1.3),
+                              status: 'Custom'
+                            });
+                          }}
+                        >
+                          Confirm Date
+                        </button>
                       </div>
 
                       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>

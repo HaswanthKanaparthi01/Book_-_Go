@@ -49,13 +49,14 @@ const PACKAGES = [
     name: 'Explore Amsterdam',
     nights: '9 nights · 10 days',
     price: 1990,
+    groupNote: 'Minimum 10 people · custom quote available for smaller groups',
     tier: 'Signature',
     color: 'yellow',
     scene: 'amsterdam',
     featured: true,
     blurb: 'A 10-day signature journey across Amsterdam, Paris, the Swiss Alps and Innsbruck with premium transfers, curated highlights and selected meals.',
     highlights: ['Arrival & Welcome in Amsterdam', 'Giethoorn whisper-boat village outing', 'Golden Age Amsterdam canal cruise', 'Brussels transit to Paris', 'Paris landmarks and Disneyland magic', 'Mount Titlis, Jungfraujoch and Innsbruck'],
-    includes: ['Return flights', 'Airport transfers', '9 nights hotel accommodation', 'Daily breakfast', 'Selected lunches and dinners', 'Guided sightseeing and attraction entry fees', 'Chauffeured transfers across Amsterdam, Paris, Switzerland and Innsbruck', 'Dedicated tour host and local support'],
+    includes: ['Return Economy Class Airfare', 'Airport transfers', '9 nights in 3★ hotels, villas & cabins', 'Continental breakfast daily', 'Vegetarian lunch & dinner at Indian restaurants', 'Guided sightseeing and attraction entry fees', 'Chauffeured transfers across Amsterdam, Paris, Switzerland and Innsbruck', 'Dedicated tour host and local support'],
     itinerary: [
       {
         d: 'Day 01',
@@ -161,20 +162,21 @@ const KEUKENHOF = {
 const PACKAGE_DETAILS = {
   explorer5: {
     hotel: {
-      name: 'Best Western Amstelveen or similar 3★ hotel',
+      name: '3★ Hotels, Villas & Cabins',
       rating: 3,
       area: 'Amsterdam · Paris · Switzerland · Innsbruck',
       room: 'Standard Twin or Double Room',
       nights: '9 nights',
-      amenities: ['Daily breakfast', 'Hot Indian dinner on arrival', 'Free Wi-Fi', 'Private transfers', '24/7 support']
+      amenities: ['Continental breakfast daily', 'Vegetarian lunch & dinner at Indian restaurants', 'Free Wi-Fi', 'Private transfers', '24/7 support']
     },
+    groupNote: 'Minimum 10 people · custom quote available for smaller groups',
     departures: buildDepartures(1990, 2790),
     inclusions: [
-      'Return flights',
+      'Return Economy Class Airfare',
       'Airport transfers',
-      '9 nights hotel accommodation',
-      'Daily breakfast',
-      'Selected lunches and dinners',
+      '9 nights hotel accommodation in 3★ hotels, villas & cabins',
+      'Continental breakfast daily',
+      'Vegetarian lunch & dinner at Indian restaurants (all 3 meals/day)',
       'Guided sightseeing and attraction entry fees',
       'Transfers between Amsterdam, Paris, Switzerland and Innsbruck',
       'Local assistance throughout the tour'
