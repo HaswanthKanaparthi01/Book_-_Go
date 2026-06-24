@@ -173,21 +173,21 @@ const PACKAGE_DETAILS = {
     departures: buildDepartures(1990, 2790),
     inclusions: [
       'Return Economy Class Airfare',
-      'Airport transfers',
+      'Airport Transfers',
       '9 nights hotel accommodation in 3★ hotels, villas & cabins',
-      'Continental breakfast daily',
-      'Vegetarian lunch & dinner at Indian restaurants (all 3 meals/day)',
+      'Continental Breakfast daily',
+      'Vegetarian Lunch & Dinner at Indian Restaurants (all 3 meals/day)',
       'Guided sightseeing and attraction entry fees',
       'Transfers between Amsterdam, Paris, Switzerland and Innsbruck',
-      'Local assistance throughout the tour'
+      'Local assistance throughout the tour',
+      'Travel Insurance'
     ],
     exclusions: [
-      'Personal expenses',
-      'Lunch & dinner where not specified',
-      'Optional activities & tickets',
-      'Additional shopping',
-      'Tips & gratuities',
-      'Travel insurance'
+      'Personal Expenses',
+      'Optional activities & Tickets',
+      'Additional Shopping',
+      'Tips & Gratuities'
+      
     ],
     exp: ['cruise', 'tulip', 'food', 'museum', 'photo']
   }

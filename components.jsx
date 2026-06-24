@@ -27,7 +27,7 @@ const SCENES = {
 
 /* Real, permanent Amsterdam photography (verified Wikimedia Commons thumbnails) */
 const SCENE_IMG = {
-  amsterdam: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/KeizersgrachtReguliersgrachtAmsterdam.jpg/1280px-KeizersgrachtReguliersgrachtAmsterdam.jpg',
+  amsterdam: 'Images/main.jpg',
   hero:      'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?fm=jpg&q=80&w=1920&auto=format&fit=crop',
   canals:    'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Colorful_canal_houses_at_golden_hour_in_Damrak_avenue_Amsterdam_the_Netherlands.jpg/1280px-Colorful_canal_houses_at_golden_hour_in_Damrak_avenue_Amsterdam_the_Netherlands.jpg',
   tulips:    'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Field_of_red_tulips_near_Keukenhof.jpg/1280px-Field_of_red_tulips_near_Keukenhof.jpg',
@@ -54,11 +54,15 @@ function Photo({ scene = 'amsterdam', img, label, className = '', style = {}, sh
   const primarySrc = img || SCENE_IMG[scene] || SCENE_IMG.amsterdam;
   // stage: 0 = try primary image, 1 = try generic fallback photo, 2 = give up, show gradient
   const [stage, setStage] = React.useState(0);
-  React.useEffect(() => { setStage(0); }, [primarySrc]);
+  const [loaded, setLoaded] = React.useState(false);
+  React.useEffect(() => { setStage(0); setLoaded(false); }, [primarySrc]);
   const src = stage === 0 ? primarySrc : stage === 1 ? FALLBACK_IMG : null;
   return (
-    <div className={`photo ${vignette ? 'photo-vignette' : ''} ${className}`} style={{ background: s.bg, ...style }}>
-      {src
+    <div
+      className={`photo ${vignette ? 'photo-vignette' : ''} ${className}`}
+      style={{ background: stage === 2 ? s.bg : 'var(--skeleton, #e7e7e7)', ...style }}
+    >
+      {src && stage !== 2
         ? <img
             key={src}
             src={src}
@@ -67,7 +71,12 @@ function Photo({ scene = 'amsterdam', img, label, className = '', style = {}, sh
             decoding="async"
             fetchPriority={priority ? 'high' : 'auto'}
             onError={() => setStage(st => st + 1)}
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+            onLoad={() => setLoaded(true)}
+            style={{
+              position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+              opacity: loaded ? 1 : 0,
+              transition: 'opacity .35s ease'
+            }}
           />
         : <><div className="photo-grain" />{s.glow && <div className="photo-glow" style={{ background: s.glow }} />}</>}
       {showLabel && <span className="photo-tag">◦ {label || s.label}</span>}

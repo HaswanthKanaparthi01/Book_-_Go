@@ -2,6 +2,20 @@
 function PackageDetail({ go, params }) {
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
+  // Preload the hero image immediately on mount so the browser starts
+  // fetching it before React even finishes rendering — fastest possible LCP.
+  useEffect(() => {
+    const href = 'Images/main.jpg';
+    if (document.querySelector(`link[rel="preload"][href="${href}"]`)) return;
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = href;
+    link.fetchPriority = 'high';
+    document.head.appendChild(link);
+    return () => { link.remove(); };
+  }, []);
+
   const [selectedPkg, setSelectedPkg] = useState(null);
   const [tab, setTab] = useState('overview');
   const [selectedDates, setSelectedDates] = useState(null);
@@ -39,6 +53,7 @@ function PackageDetail({ go, params }) {
       <section className="package-hero">
         <Photo
           scene="amsterdam"
+          img="Images/main.jpg"
           showLabel={false}
           vignette={false}
           priority

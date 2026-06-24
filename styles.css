@@ -9,6 +9,7 @@
 :root {
   /* Core */
   --white: #ffffff;
+  --skeleton: #e9e9e7;       /* neutral loading placeholder, no color flash */
   --paper: #fbfbf9;          /* warm off-white surface */
   --ink: #0c0d0c;            /* near-black text */
   --ink-2: #45494a;          /* secondary text */
@@ -452,12 +453,14 @@ html { overflow-x: clip; }
   position: relative;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   min-height: 600px;
   max-height: 1080px;
   overflow: hidden;
 }
 .home-hero-stage__layer {
-  transition: opacity 0.5s ease;
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
 }
 .home-hero-stage .section {
   padding: 0;

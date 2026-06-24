@@ -107,7 +107,7 @@ function Home({ go }) {
   stageRef.current = stage;
 
   React.useEffect(() => {
-    const TRANSITION_MS = 650;
+    const TRANSITION_MS = 900;
 
     const goTo = (next) => {
       if (next === stageRef.current) return;
@@ -163,6 +163,7 @@ function Home({ go }) {
     position: 'absolute', inset: 0,
     zIndex: stage === idx ? 2 : 1,
     opacity: stage === idx ? 1 : 0,
+    transform: stage === idx ? 'scale(1)' : 'scale(1.045)',
     pointerEvents: stage === idx ? 'auto' : 'none',
     display: 'flex', alignItems: 'center', justifyContent: 'center'
   });
@@ -204,8 +205,8 @@ function Home({ go }) {
         </section>
 
         {/* MIDDLE — Choose your destination */}
-        <section className="section home-hero-stage__layer" id="discover" style={{ ...layerStyle(1), background: 'var(--paper)', overflowY: 'auto' }}>
-          <div className="wrap">
+        <section className="section home-hero-stage__layer" id="discover" style={{ ...layerStyle(1), background: 'var(--paper)', overflowY: 'auto', alignItems: 'flex-start' }}>
+          <div className="wrap" style={{ paddingTop: 110 }}>
             <SectionHead eyebrow="Book & Go travel agency" title="Choose your destination." />
             <div className="dest-grid-2">
 
@@ -215,7 +216,7 @@ function Home({ go }) {
                 textAlign: 'left', display: 'block', boxShadow: 'var(--shadow-md)',
                 background: 'none', padding: 0
               }}>
-                <Photo scene="amsterdam" style={{ position: 'absolute', inset: 0, height: '100%' }} />
+                <Photo scene="amsterdam" img="Images/main.jpg" priority style={{ position: 'absolute', inset: 0, height: '100%' }} />
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 36%, rgba(0,0,0,.82) 100%)' }} />
                 <div className="dest-card-body" style={{
                   position: 'relative', zIndex: 2, minHeight: 460,
@@ -265,7 +266,7 @@ function Home({ go }) {
 
         {/* FOOTER — separate final screen state */}
         <section className="home-hero-stage__layer" style={{ ...layerStyle(2), background: 'var(--ink)', overflowY: 'auto', alignItems: 'flex-start' }}>
-          <div className="home-footer-centered" style={{ width: '100%' }}>
+          <div className="home-footer-centered" style={{ width: '100%', paddingBottom: 'max(32px, env(safe-area-inset-bottom))' }}>
             <SiteFooter go={go} />
           </div>
         </section>

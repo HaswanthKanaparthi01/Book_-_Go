@@ -17,7 +17,9 @@ function ToastHost({ toasts }) {
 function Booking({ go, params, toast }) {
   const [step, setStep] = React.useState(1);
   const [formData, setFormData] = React.useState({ travelers: 10, name: '', email: '', rooms: 'twin', requests: '' });
-  
+
+  React.useEffect(() => { window.scrollTo(0, 0); }, []);
+
   const pkgId = params.pkg || 'explorer5';
   const pkg = PACKAGE_DETAILS[pkgId];
   const departure = params.departure || 'Not selected';
@@ -286,7 +288,10 @@ function App() {
         if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' });
       }, 60);
     } else {
-      window.scrollTo(0, 0);
+      // Defer until after the new route has painted, so scroll always lands
+      // at the top of the new page rather than wherever the previous page
+      // happened to be scrolled to.
+      requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo(0, 0)));
     }
   }, []);
 
