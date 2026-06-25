@@ -1,4 +1,4 @@
-/* ---------------- Package Detail / Explore Amsterdam ---------------- */
+/* ---------------- Package Detail / Explore Europe ---------------- */
 function PackageDetail({ go, params }) {
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -104,11 +104,11 @@ function PackageDetail({ go, params }) {
             className="display"
             style={{
               color: '#fbfbf6',
-              fontSize: 'clamp(48px,9vw,126px)',
+              fontSize: 'clamp(48px,15vw,126px)',
               margin: '0 0 10px'
             }}
           >
-            Explore Amsterdam
+            Explore Europe
           </h1>
 
           <p
@@ -131,7 +131,7 @@ function PackageDetail({ go, params }) {
         <div className="wrap">
           <SectionHead
             eyebrow="Europe tour package"
-            title="Explore Amsterdam"
+            title="Explore Europe"
           />
 
           <div
@@ -364,7 +364,7 @@ function PackageDetail({ go, params }) {
                   <h2
                     className="display"
                     style={{
-                      fontSize: 'clamp(42px,6vw,76px)',
+                      fontSize: 'clamp(42px,13.1vw,76px)',
                       margin: '0 0 10px'
                     }}
                   >
@@ -511,7 +511,7 @@ function PackageDetail({ go, params }) {
                         margin: '0 0 22px'
                       }}
                     >
-                      Highlights from Day 2 to Day 9 of your journey.
+                      Highlights from your journey.
                     </p>
 
                     <div
@@ -907,8 +907,15 @@ function PackageDetail({ go, params }) {
                     <button
                       onClick={() => {
                         setContactPrefill(`I'd like to enquire about a departure date for ${selected.name}.`);
-                        const el = document.getElementById('contact-us-form');
-                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        const scrollToForm = (attempt = 0) => {
+                          const el = document.getElementById('contact-us-form');
+                          if (el) {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                          } else if (attempt < 5) {
+                            setTimeout(() => scrollToForm(attempt + 1), 100);
+                          }
+                        };
+                        scrollToForm();
                       }}
                       className="btn btn-green btn-lg"
                       style={{ marginTop: 24 }}
@@ -1154,57 +1161,6 @@ function PackageDetail({ go, params }) {
                         </button>
                       </div>
 
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
-                        <div style={{ flex: 1, height: '1px', background: 'var(--line)' }} />
-                        <span style={{ fontSize: 12, color: 'var(--ink-3)', fontWeight: 600 }}>or</span>
-                        <div style={{ flex: 1, height: '1px', background: 'var(--line)' }} />
-                      </div>
-
-                      {/* Suggested dates */}
-                      <div style={{ marginBottom: 12 }}>
-                        <div className="eyebrow" style={{ marginBottom: 10, fontSize: 12 }}>
-                          Suggested Departures
-                        </div>
-                      </div>
-
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                        {det && det.departures.map(d => (
-                          <button
-                            key={d.date}
-                            onClick={() => setSelectedDates(d)}
-                            style={{
-                              padding: '12px 14px',
-                              borderRadius: 'var(--r-md)',
-                              border: '1.5px solid var(--line)',
-                              background: '#fff',
-                              fontSize: 13,
-                              fontWeight: 600,
-                              cursor: 'pointer',
-                              transition: 'all .2s',
-                              textAlign: 'left',
-                              color: 'var(--ink)',
-                              opacity: d.status === 'Available' ? 1 : 0.5,
-                              display: 'flex',
-                              justifyContent: 'space-between',
-                              alignItems: 'center'
-                            }}
-                            onMouseEnter={e => {
-                              if (d.status === 'Available') {
-                                e.currentTarget.style.borderColor = 'var(--green)';
-                                e.currentTarget.style.background = 'var(--green-soft)';
-                              }
-                            }}
-                            onMouseLeave={e => {
-                              e.currentTarget.style.borderColor = 'var(--line)';
-                              e.currentTarget.style.background = '#fff';
-                            }}
-                            disabled={d.status !== 'Available'}
-                          >
-                            <span>{d.date}</span>
-                            <span style={{ fontSize: 12, color: d.status === 'Available' ? 'var(--ink-3)' : 'var(--ink-3)', fontWeight: 500 }}>€{d.twin}</span>
-                          </button>
-                        ))}
-                      </div>
                     </>
                   ) : (
                     <>

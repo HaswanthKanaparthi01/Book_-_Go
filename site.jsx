@@ -78,6 +78,11 @@ function SiteFooter({ go, prefillMessage }) {
                 <div style={{ fontWeight: 800, fontSize: 15, marginBottom: 4 }}>
                   +31614664830 <span style={{ color: 'rgba(255,255,255,.4)', fontWeight: 600 }}>|</span> +310685806568
                 </div>
+                <div style={{ marginBottom: 4 }}>
+                  <a href="mailto:info@bookgo.travel" style={{ fontWeight: 800, fontSize: 15, color: '#fff', textDecoration: 'none' }}>
+                    info@bookgo.travel
+                  </a>
+                </div>
                 <div style={{ color: 'rgba(255,255,255,.55)', fontSize: 13.5 }}>Mon - Sun · 24/7 Alpine Assistance Team</div>
               </div>
             </div>
@@ -184,7 +189,7 @@ function Home({ go }) {
           <div className="wrap" style={{ position: 'relative', zIndex: 2, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
             <h1 className="display fade-up hero__title" style={{
               color: '#ffffff',
-              fontSize: 'clamp(52px, 8.4vw, 118px)',
+              fontSize: 'clamp(52px, 16.25vw, 118px)',
               margin: '0 0 20px',
               textShadow: '0 2px 24px rgba(0,0,0,.55)',
               maxWidth: 1100
@@ -235,7 +240,7 @@ function Home({ go }) {
                     <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--green)', flexShrink: 0 }} />
                     Available now
                   </span>
-                  <h3 className="display" style={{ fontSize: 'clamp(40px,5vw,66px)', margin: '0 0 12px' }}>Explore Amsterdam</h3>
+                  <h3 className="display" style={{ fontSize: 'clamp(28px,8vw,66px)', margin: '0 0 12px' }}>Explore Europe</h3>
                   <p style={{ fontWeight: 600, fontSize: 17.5, color: 'rgba(255,255,255,.92)', margin: '0 0 24px', maxWidth: 430, textShadow: '0 2px 14px rgba(0,0,0,.4)' }}>
                     A 10-day signature journey across Europe and the Alps with premium transfers, curated highlights and carefully chosen meals.
                   </p>
@@ -252,7 +257,7 @@ function Home({ go }) {
                 padding: 38, display: 'flex', flexDirection: 'column', justifyContent: 'center'
               }}>
                 <div className="eyebrow" style={{ color: 'var(--green)', marginBottom: 18 }}>Coming Soon</div>
-                <h3 className="display" style={{ fontSize: 'clamp(34px,4vw,52px)', margin: '0 0 20px' }}>
+                <h3 className="display" style={{ fontSize: 'clamp(34px,10.6vw,52px)', margin: '0 0 20px' }}>
                   More places.<br />More stories.<br />More adventures.
                 </h3>
                 <p style={{ color: 'rgba(255,255,255,.75)', fontSize: 17, lineHeight: 1.6, maxWidth: 420, margin: 0 }}>
@@ -282,7 +287,7 @@ function SectionHead({ eyebrow, title, right }) {
     <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 24, marginBottom: 54, flexWrap: 'wrap' }}>
       <div>
         <div className="eyebrow" style={{ marginBottom: 12 }}>{eyebrow}</div>
-        <h2 className="display" style={{ fontSize: 'clamp(34px,5.2vw,64px)', margin: 0 }}>{title}</h2>
+        <h2 className="display" style={{ fontSize: 'clamp(30px,9vw,64px)', margin: 0 }}>{title}</h2>
       </div>
       {right}
     </div>

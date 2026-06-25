@@ -46,7 +46,7 @@ const EXPERIENCES = [
 const PACKAGES = [
   {
     id: 'explorer5',
-    name: 'Explore Amsterdam',
+    name: 'Explore Europe',
     nights: '9 nights · 10 days',
     price: 1990,
     groupNote: 'Minimum 10 people · custom quote available for smaller groups',
@@ -62,70 +62,70 @@ const PACKAGES = [
         d: 'Day 01',
         t: 'Arrival & Welcome',
         scene: 'amsterdam',
-        img: 'Images/day1.png',
+        img: 'Images/day1.jpg',
         items: ['Arrive at Amsterdam Airport (AMS) and meet your private tour host', 'Private transfer to your hotel', 'Relax and enjoy a welcome briefing over local Dutch treats', 'Overnight stay in Amsterdam']
       },
       {
         d: 'Day 02',
         t: 'Giethoorn Village Outing',
         scene: 'giethoorn',
-        img: 'Images/day2.png',
+        img: 'Images/day2.jpg',
         items: ['Breakfast at the hotel', 'Travel to Giethoorn, the Venice of the North', 'Private whisper-quiet electric boat ride past thatched cottages and wooden bridges', 'Return to Amsterdam for overnight stay']
       },
       {
         d: 'Day 03',
         t: 'Amsterdam Canals',
         scene: 'canals',
-        img: 'Images/day3.png',
+        img: 'Images/day3.jpg',
         items: ['Breakfast at hotel', 'Discover the Golden Age canal ring and Jordaan architecture', 'Visit legendary museum treasures', 'Sunset cruise as the bridges glow blue', 'Overnight in Amsterdam']
       },
       {
         d: 'Day 04',
         t: 'Transit to Paris via Brussels',
         scene: 'photo',
-        img: 'Images/day4.png',
+        img: 'Images/day4.jpg',
         items: ['Breakfast in Amsterdam', 'Premium chauffeured van transfer through Brussels', 'Scenic stop at Grand Place and Atomium', 'Continue to Paris and check in at your hotel', 'Overnight stay in Paris']
       },
       {
         d: 'Day 05',
         t: 'Paris Iconic Landmarks',
         scene: 'museum',
-        img: 'Images/day5.png',
+        img: 'Images/day5.jpg',
         items: ['Breakfast at hotel', 'Guided visits to the Eiffel Tower, Louvre and Notre-Dame', 'Seine river cruise and Montmartre artist steps', 'Golden-hour viewpoints with photographer documentation', 'Overnight stay in Paris']
       },
       {
         d: 'Day 06',
         t: 'Disneyland Paris Magic',
         scene: 'nightlife',
-        img: 'Images/day6.png',
+        img: 'Images/day6.jpg',
         items: ['Breakfast at hotel', 'Full day at Disneyland Park and Walt Disney Studios', 'Enjoy parades, thrill rides and firework spectacles', 'Return to Paris hotel for overnight stay']
       },
       {
         d: 'Day 07',
         t: 'Zurich & Mount Titlis Summit',
         scene: 'sunset',
-        img: 'Images/day7.png',
+        img: 'Images/day7.jpg',
         items: ['Breakfast in Paris', 'Transfer to Switzerland via Zurich', 'Ride the Rotair cable car to Mt. Titlis', 'Cross the glacier cliff walk and explore ice tunnels', 'Overnight stay in Switzerland']
       },
       {
         d: 'Day 08',
         t: 'Jungfraujoch & Interlaken',
         scene: 'photo',
-        img: 'Images/day8.png',
+        img: 'Images/day8.jpg',
         items: ['Breakfast at hotel', 'Summit the Top of Europe at Jungfraujoch', 'Visit the Sphinx Observatory and Aletsch Glacier', 'Descend to Interlaken and explore lakeside scenery', 'Overnight stay in Switzerland']
       },
       {
         d: 'Day 09',
         t: 'Innsbruck Alpine Valley',
         scene: 'dam',
-        img: 'Images/day9.png',
+        img: 'Images/day9.jpg',
         items: ['Breakfast at hotel', 'Admire the Golden Roof in Innsbruck', 'Ascend the Nordkette cable car for Alpine valley views', 'Enjoy an elegant Austrian dinner in historic squares', 'Overnight stay in Innsbruck']
       },
       {
         d: 'Day 10',
         t: 'Zurich Departure Flight',
         scene: 'amsterdam',
-        img: 'Images/day10.png',
+        img: 'Images/day10.jpg',
         items: ['Breakfast at hotel', 'Final morning of Swiss luxury shopping and lake views', 'Private transfer to Zurich Airport (ZRH)', 'Depart with memories documented forever']
       }
     ]
@@ -173,17 +173,18 @@ const PACKAGE_DETAILS = {
     departures: buildDepartures(1990, 2790),
     inclusions: [
       'Return Economy Class Airfare',
-      'Airport Transfers',
+      'Airport transfers',
       '9 nights hotel accommodation in 3★ hotels, villas & cabins',
-      'Continental Breakfast daily',
-      'Vegetarian Lunch & Dinner at Indian Restaurants (all 3 meals/day)',
+      'Continental breakfast daily',
+      'Vegetarian lunch & dinner at Indian restaurants (all 3 meals/day)',
       'Guided sightseeing and attraction entry fees',
       'Transfers between Amsterdam, Paris, Switzerland and Innsbruck',
       'Local assistance throughout the tour',
-      'Travel Insurance'
+      'Travel insurance'
     ],
     exclusions: [
       'Personal Expenses',
+      'Lunch & Dinner where not specified',
       'Optional activities & Tickets',
       'Additional Shopping',
       'Tips & Gratuities'
