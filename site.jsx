@@ -110,6 +110,7 @@ function Home({ go }) {
   const lockRef = React.useRef(false);
   const stageRef = React.useRef(0);
   stageRef.current = stage;
+  const sectionRefs = React.useRef([null, null, null]);
 
   React.useEffect(() => {
     const TRANSITION_MS = 900;
@@ -122,29 +123,59 @@ function Home({ go }) {
       setTimeout(() => { lockRef.current = false; }, TRANSITION_MS);
     };
 
+    // Returns true if the *currently active* section still has room to
+    // scroll further in the given direction — in that case we should let
+    // the browser scroll it natively instead of hijacking the gesture to
+    // change screens. This is what makes tall content (e.g. the Footer on
+    // short viewports) actually reachable on mobile.
+    const activeCanScroll = (dir) => {
+      const el = sectionRefs.current[stageRef.current];
+      if (!el) return false;
+      const atTop = el.scrollTop <= 0;
+      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+      if (dir > 0) return !atBottom; // scrolling down/forward
+      return !atTop; // scrolling up/backward
+    };
+
     const onWheel = (e) => {
+      const dir = e.deltaY > 0 ? 1 : e.deltaY < 0 ? -1 : 0;
+      if (dir === 0) return;
+      if (Math.abs(e.deltaY) <= 8) return;
+      if (activeCanScroll(dir)) return; // let it scroll natively
       e.preventDefault();
       if (lockRef.current) return;
-      if (e.deltaY > 8) goTo(stageRef.current + 1);
-      else if (e.deltaY < -8) goTo(stageRef.current - 1);
+      goTo(stageRef.current + dir);
     };
 
     let touchStartY = null;
     const onTouchStart = (e) => { touchStartY = e.touches[0].clientY; };
-    const onTouchMove = (e) => { e.preventDefault(); };
+    const onTouchMove = (e) => {
+      if (touchStartY == null) return;
+      const dy = touchStartY - e.touches[0].clientY; // >0 = finger moving up = scrolling down
+      const dir = dy > 0 ? 1 : dy < 0 ? -1 : 0;
+      if (dir !== 0 && activeCanScroll(dir)) return; // let native scroll happen
+      e.preventDefault();
+    };
     const onTouchEnd = (e) => {
       if (touchStartY == null) return;
       const dy = touchStartY - e.changedTouches[0].clientY;
+      const dir = dy > 0 ? 1 : dy < 0 ? -1 : 0;
       touchStartY = null;
       if (lockRef.current) return;
+      if (dir !== 0 && activeCanScroll(dir)) return; // was a normal scroll, not a screen-change swipe
       if (dy > 30) goTo(stageRef.current + 1);
       else if (dy < -30) goTo(stageRef.current - 1);
     };
 
     const onKey = (e) => {
       if (lockRef.current) return;
-      if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); goTo(stageRef.current + 1); }
-      else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); goTo(stageRef.current - 1); }
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+        if (activeCanScroll(1)) return;
+        e.preventDefault(); goTo(stageRef.current + 1);
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        if (activeCanScroll(-1)) return;
+        e.preventDefault(); goTo(stageRef.current - 1);
+      }
     };
 
     document.body.classList.add('home-stage-lock');
@@ -181,7 +212,7 @@ function Home({ go }) {
       <div className="home-hero-stage">
 
         {/* TOP */}
-        <section className="hero home-hero-stage__layer" style={layerStyle(0)}>
+        <section ref={el => sectionRefs.current[0] = el} className="hero home-hero-stage__layer" style={layerStyle(0)}>
           <Photo scene="hero" showLabel={false} vignette={false} priority style={{ position: 'absolute', inset: 0, height: '100%' }} />
           <div className="hero__overlay" style={{
             background: 'linear-gradient(180deg, rgba(0,0,0,.60) 0%, rgba(0,0,0,.48) 38%, rgba(0,0,0,.40) 60%, rgba(0,0,0,.65) 100%)'
@@ -210,7 +241,7 @@ function Home({ go }) {
         </section>
 
         {/* MIDDLE — Choose your destination */}
-        <section className="section home-hero-stage__layer" id="discover" style={{ ...layerStyle(1), background: 'var(--paper)', overflowY: 'auto', alignItems: 'flex-start' }}>
+        <section ref={el => sectionRefs.current[1] = el} className="section home-hero-stage__layer" id="discover" style={{ ...layerStyle(1), background: 'var(--paper)', overflowY: 'auto', alignItems: 'flex-start' }}>
           <div className="wrap" style={{ paddingTop: 110 }}>
             <SectionHead eyebrow="Book & Go travel agency" title="Choose your destination." />
             <div className="dest-grid-2">
@@ -270,7 +301,7 @@ function Home({ go }) {
         </section>
 
         {/* FOOTER — separate final screen state */}
-        <section className="home-hero-stage__layer" style={{ ...layerStyle(2), background: 'var(--ink)', overflowY: 'auto', alignItems: 'flex-start' }}>
+        <section ref={el => sectionRefs.current[2] = el} className="home-hero-stage__layer" style={{ ...layerStyle(2), background: 'var(--ink)', overflowY: 'auto', alignItems: 'flex-start' }}>
           <div className="home-footer-centered" style={{ width: '100%', paddingBottom: 'max(32px, env(safe-area-inset-bottom))' }}>
             <SiteFooter go={go} />
           </div>
