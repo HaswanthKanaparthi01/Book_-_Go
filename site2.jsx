@@ -20,6 +20,7 @@ function PackageDetail({ go, params }) {
   const [tab, setTab] = useState('overview');
   const [selectedDates, setSelectedDates] = useState(null);
   const [customDateInput, setCustomDateInput] = useState('');
+  const [contactPrefill, setContactPrefill] = useState('');
 
   const selected = selectedPkg;
   const det = selected ? (PACKAGE_DETAILS[selected.id] || PACKAGE_DETAILS.explorer5) : null;
@@ -510,7 +511,7 @@ function PackageDetail({ go, params }) {
                         margin: '0 0 22px'
                       }}
                     >
-                      Highlights from your journey.
+                      Highlights from Day 2 to Day 9 of your journey.
                     </p>
 
                     <div
@@ -886,54 +887,29 @@ function PackageDetail({ go, params }) {
                         margin: '0 0 24px'
                       }}
                     >
-                      Sample departures enquiry flow.
+                      Get in touch and we'll confirm a departure date that works for your group.
                     </p>
 
-                    <div className="card depart-table" style={{ overflow: 'hidden' }}>
-                      <div className="depart-row depart-row--head">
-                        <span>Departure</span>
-                        <span>Twin Sharing</span>
-                        <span>Single</span>
-                        <span>Status</span>
+                    <div className="card" style={{ padding: 28 }}>
+                      <div style={{ color: 'var(--ink-3)', fontWeight: 600, fontSize: 14, marginBottom: 4 }}>
+                        Starting from
                       </div>
-
-                      {det.departures.map((d, i) => (
-                        <div key={d.date} className="depart-row" style={{ borderBottom: i < det.departures.length - 1 ? '1px solid var(--line)' : 'none' }}>
-                          <span style={{ fontWeight: 700, fontSize: 14.5 }}>
-                            {d.date}
-                          </span>
-
-                          <span className="display" style={{ fontSize: 18 }}>
-                            €{d.twin}
-                          </span>
-
-                          <span
-                            style={{
-                              fontWeight: 700,
-                              fontSize: 15,
-                              color: 'var(--ink-2)'
-                            }}
-                          >
-                            €{d.single}
-                          </span>
-
-                          <span>
-                            <span
-                              className="badge"
-                              style={{
-                                background: d.status === 'Available' ? 'var(--green-soft)' : 'var(--status-pending-bg)',
-                                color: d.status === 'Available' ? 'var(--green-ink)' : 'var(--status-pending)'
-                              }}
-                            >
-                              {d.status}
-                            </span>
-                          </span>
+                      <div className="display" style={{ fontSize: 40, marginBottom: 6 }}>
+                        €{selected.price} <span style={{ fontSize: 16, color: 'var(--ink-3)', fontWeight: 600 }}>per person</span>
+                      </div>
+                      {selected.groupNote && (
+                        <div style={{ color: 'var(--ink-2)', fontWeight: 600, fontSize: 14 }}>
+                          {selected.groupNote}
                         </div>
-                      ))}
+                      )}
                     </div>
 
                     <button
-                      onClick={() => go('booking', { pkg: selected.id })}
+                      onClick={() => {
+                        setContactPrefill(`I'd like to enquire about a departure date for ${selected.name}.`);
+                        const el = document.getElementById('contact-us-form');
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }}
                       className="btn btn-green btn-lg"
                       style={{ marginTop: 24 }}
                     >
@@ -1264,7 +1240,7 @@ function PackageDetail({ go, params }) {
         </section>
       )}
 
-      <SiteFooter go={go} />
+      <SiteFooter go={go} prefillMessage={contactPrefill} />
     </div>
   );
 }

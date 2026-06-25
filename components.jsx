@@ -145,10 +145,14 @@ function Icon({ name, size = 18, stroke = 2, color = 'currentColor' }) {
 
 
 /* ---- Contact Us form (frontend-only) ---- */
-function ContactForm({ title = 'Contact Us', subtitle, dark = false }) {
-  const [form, setForm] = React.useState({ name: '', email: '', phone: '', message: '' });
+function ContactForm({ title = 'Contact Us', subtitle, dark = false, prefillMessage = '' }) {
+  const [form, setForm] = React.useState({ name: '', email: '', phone: '', message: prefillMessage });
   const [errors, setErrors] = React.useState({});
   const [submitted, setSubmitted] = React.useState(false);
+
+  React.useEffect(() => {
+    if (prefillMessage) setForm(f => ({ ...f, message: prefillMessage }));
+  }, [prefillMessage]);
 
   const update = (field, val) => {
     setForm(f => ({ ...f, [field]: val }));

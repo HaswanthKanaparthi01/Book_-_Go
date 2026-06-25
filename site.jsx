@@ -42,7 +42,7 @@ function SiteNav({ go, solid }) {
 }
 
 /* ---------------- Footer ---------------- */
-function SiteFooter({ go }) {
+function SiteFooter({ go, prefillMessage }) {
   return (
     <footer style={{ background: 'var(--ink)', color: '#fff', padding: '64px 0 40px' }}>
       <div className="wrap">
@@ -84,8 +84,8 @@ function SiteFooter({ go }) {
           </div>
 
           {/* RIGHT — compact Contact Us form */}
-          <div className="foot-contact-form">
-            <ContactForm title="Contact Us" dark />
+          <div className="foot-contact-form" id="contact-us-form">
+            <ContactForm title="Contact Us" dark prefillMessage={prefillMessage} />
           </div>
 
         </div>
