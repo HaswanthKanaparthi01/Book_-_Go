@@ -477,7 +477,13 @@ body.home-stage-lock {
   display: none !important;
 }
 
-/* Contact form — dark/compact variant for footer integration */
+/* Package comparison grid — stack on tablet/mobile */
+@media (max-width: 860px) {
+  .pkg-compare-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 .contact-form--dark input:focus,
 .contact-form--dark textarea:focus {
   outline: none;

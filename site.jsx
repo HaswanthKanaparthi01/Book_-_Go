@@ -237,6 +237,16 @@ function Home({ go }) {
             }}>
               Curated travel experiences designed for modern explorers. Discover unique journeys and unforgettable destinations.
             </p>
+            <p className="fade-up" style={{
+              color: '#ffffff',
+              fontSize: 'clamp(15px,1.7vw,20px)',
+              fontWeight: 800,
+              margin: '14px 0 0',
+              textShadow: '0 2px 14px rgba(0,0,0,.6)',
+              letterSpacing: '0.01em'
+            }}>
+              Starts from ₹4,999 INR / €49 per month
+            </p>
           </div>
         </section>
 

@@ -135,13 +135,16 @@ function PackageDetail({ go, params }) {
           />
 
           <div
-            className="grid-3"
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(3,1fr)',
-              gap: 22
+              gridTemplateColumns: '1fr 1.4fr',
+              gap: 28,
+              alignItems: 'start'
             }}
+            className="pkg-compare-grid"
           >
+            {/* Package card */}
+            <div>
             {PACKAGES.map(pkg => {
               const pkgAccent = getAccent(pkg);
               const pkgAccentInk = getAccentInk(pkgAccent);
@@ -324,6 +327,71 @@ function PackageDetail({ go, params }) {
                 </div>
               );
             })}
+            </div>
+
+            {/* Comparison table */}
+            <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+              <div style={{ padding: '18px 22px 14px', borderBottom: '1px solid var(--line)' }}>
+                <div className="eyebrow" style={{ marginBottom: 4 }}>Why Book & Go?</div>
+                <div style={{ fontWeight: 800, fontSize: 17 }}>See how we compare</div>
+              </div>
+
+              {/* Column headers */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr', borderBottom: '2px solid var(--line)' }}>
+                <div style={{ padding: '10px 14px', fontSize: 12, fontWeight: 700, color: 'var(--ink-3)' }}></div>
+                {[
+                  { label: 'Book & Go', highlight: true },
+                  { label: 'Thomas Cook', highlight: false }
+                ].map(col => (
+                  <div key={col.label} style={{
+                    padding: '10px 8px',
+                    textAlign: 'center',
+                    background: col.highlight ? 'var(--green-soft)' : 'transparent',
+                    borderLeft: col.highlight ? '2px solid var(--green)' : '1px solid var(--line)',
+                    fontSize: 12.5,
+                    fontWeight: 800,
+                    color: col.highlight ? 'var(--green-ink)' : 'var(--ink-3)'
+                  }}>
+                    {col.label}
+                    {col.highlight && <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--green)', marginTop: 2 }}>★ Best Choice</div>}
+                  </div>
+                ))}
+              </div>
+
+              {/* Rows */}
+              {[
+                { feature: 'Price',          us: '€1,990 / ₹1.99L',          tc: '₹2.99L' },
+                { feature: 'Meals',          us: 'All 3 meals, vegetarian',   tc: 'Limited coverage' },
+                { feature: 'Photographer',   us: 'Included',                  tc: '—' },
+                { feature: 'Accommodation',  us: 'Hotels, Villas & Cabins',   tc: 'Standard hotels' },
+                { feature: 'Visa assistance',us: 'Fully included',            tc: 'Additional charges' },
+                { feature: 'Group size',     us: 'Min 10 people',             tc: 'Large fixed groups' },
+                { feature: 'Duration',       us: '10 days / 9 nights',        tc: '11 days' },
+                { feature: 'Flights',        us: 'Round-trip economy included',tc: 'Round-trip included' }
+              ].map((row, i) => (
+                <div key={row.feature} style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1.5fr 1fr 1fr',
+                  borderBottom: i < 7 ? '1px solid var(--line)' : 'none',
+                  background: i % 2 === 1 ? 'rgba(0,0,0,.015)' : 'transparent'
+                }}>
+                  <div style={{ padding: '10px 14px', fontSize: 12.5, fontWeight: 700, color: 'var(--ink-2)' }}>
+                    {row.feature}
+                  </div>
+                  <div style={{
+                    padding: '10px 8px', fontSize: 12, fontWeight: 700,
+                    color: 'var(--green-ink)', background: 'var(--green-soft)',
+                    borderLeft: '2px solid var(--green)', textAlign: 'center'
+                  }}>
+                    ✓ {row.us}
+                  </div>
+                  <div style={{ padding: '10px 8px', fontSize: 12, color: 'var(--ink-3)', textAlign: 'center', borderLeft: '1px solid var(--line)' }}>
+                    {row.tc}
+                  </div>
+                </div>
+              ))}
+            </div>
+
           </div>
         </div>
       </section>
@@ -511,7 +579,7 @@ function PackageDetail({ go, params }) {
                         margin: '0 0 22px'
                       }}
                     >
-                      Highlights from your journey.
+                      Highlights from Day 2 to Day 9 of your journey.
                     </p>
 
                     <div
